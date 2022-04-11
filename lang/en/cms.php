@@ -45,10 +45,18 @@ return [
     'message' => 'Message',
     'read_at' => 'Read At',
     'sent_at' => 'Sent At',
+
+
     'categories'=>'Categories',
+    'category'=>'Category',
     'description'=>'Description',
     'create_category'=>'Create Category',
     'edit_category'=>'Edit Category',
+    'sub_categories'=>'Sub Categories',
+    'create_sub_category'=>'Create Sub Category',
+    'edit_sub_category'=>'Edit Sub Category',
+    'title'=>'Title',
+    
     
 
 ];

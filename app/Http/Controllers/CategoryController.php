@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DateTime;
@@ -19,9 +20,16 @@ class CategoryController extends Controller
      */
     public function index()
      {
-         $categories = Category::all();
+         $categories = Category::withcount('subcategories')->get();
          return response()->view('cms.categories.index', ['categories' => $categories]);
     }
+
+    public function showSubCategories(Request $request , Category $category)
+    {
+        $subcategories = Category::where('id',$category->id)->first()->subcategories;
+        return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,8 +63,6 @@ class CategoryController extends Controller
                 $file = $request->file('image');
                 $imageName =  time().'_category_image.' . $file->getClientOriginalExtension();
                 $status = $request->file('image')->storePubliclyAs('images/categories', $imageName);
-                // $status = $request->file('image')->storePublicly('images/categories');
-                dd($status);
                 $imagePath = 'images/categories/' . $imageName;
                 $category->image = $imagePath;
             }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\order_review;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class OrderReviewController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class OrderReviewController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\order_review  $order_review
+     * @param  \App\Models\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function show(order_review $order_review)
+    public function show(User $User)
     {
         //
     }
@@ -52,10 +52,10 @@ class OrderReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\order_review  $order_review
+     * @param  \App\Models\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function edit(order_review $order_review)
+    public function edit(User $User)
     {
         //
     }
@@ -64,10 +64,10 @@ class OrderReviewController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\order_review  $order_review
+     * @param  \App\Models\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, order_review $order_review)
+    public function update(Request $request, User $User)
     {
         //
     }
@@ -75,10 +75,10 @@ class OrderReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\order_review  $order_review
+     * @param  \App\Models\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function destroy(order_review $order_review)
+    public function destroy(User $User)
     {
         //
     }

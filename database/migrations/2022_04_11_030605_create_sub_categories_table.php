@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name',45);
-            $table->string('description',100);
+            $table->string('title',45);
             $table->string('image');
             $table->foreignId('category_id')->constrained()->restrictOnDelete();
             $table->timestamps();
