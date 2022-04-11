@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\MealController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::get('/', function () {
 Route::prefix('cms/admin')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('subcategories', SubCategoryController::class);
+    Route::resource('meals', MealController::class);
     Route::get('{category}/subcategories', [CategoryController::class, 'showSubCategories'])->name('category.showsubcategories');
 
 

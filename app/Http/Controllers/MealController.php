@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\meal;
+use App\Models\Meal;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class MealController extends Controller
@@ -14,8 +15,10 @@ class MealController extends Controller
      */
     public function index()
     {
-        //
+        $meals = Meal::with('category')->get();
+        return response()->view('cms.meals.index', ['meals' => $meals]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,9 +27,9 @@ class MealController extends Controller
      */
     public function create()
     {
-        //
+        $subcategories=SubCategory::all();
+        return response()->view('cms.subcategories.create',['subcategories' => $subcategories]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +38,33 @@ class MealController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator($request->all(), [
+            'subcategory_id' => 'required|numeric|exists:categories,id',
+            'title' => 'required|string|min:3',
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+        ]);
+
+        if (!$validator->fails()) {
+            $subcategory = new SubCategory();
+            $subcategory->category_id= $request->input('category_id');
+            $subcategory->title= $request->input('title');
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $imageName =  time().'_category_image.' . $file->getClientOriginalExtension();
+                $status = $request->file('image')->storePubliclyAs('images/subcategories', $imageName);
+                $imagePath = 'images/subcategories/' . $imageName;
+                $subcategory->image = $imagePath;
+            }
+            $isSaved = $subcategory->save();
+            if ($isSaved) return response()->json([
+                'message' => $isSaved ? 'Saved successfully' : 'Save failed!'
+            ], $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 
     /**
