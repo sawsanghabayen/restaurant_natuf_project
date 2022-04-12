@@ -4,6 +4,7 @@ return [
     'cities' => 'Cities',
     'create' => 'Create',
     'index' => 'Index',
+    'home' => 'Home',
     'create_city' => 'Create City',
     'name_en' => 'Engilsh Name',
     'name_ar' => 'Arabic Name',
@@ -54,10 +55,12 @@ return [
     'create_category'=>'Create Category',
     'edit_category'=>'Edit Category',
     'sub_categories'=>'Sub Categories',
+    'sub_category'=>'Sub Category',
     'create_sub_category'=>'Create Sub Category',
     'edit_sub_category'=>'Edit Sub Category',
     'title'=>'Title',
     'price'=>'Price',
+    'create_meal'=>'Create Meal',
     
     
 

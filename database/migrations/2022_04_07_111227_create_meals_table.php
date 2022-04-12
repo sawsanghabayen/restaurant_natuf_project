@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description', 100);
             $table->string('image');
             $table->float('price');
-            $table->enum('status', ['Visible', 'InVisible'])->default('Visible');
+            $table->boolean('active')->default(true);
             $table->timestamps();
             $table->foreignId('sub_category_id')->constrained()->restrictOnDelete();
 

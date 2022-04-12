@@ -1,9 +1,11 @@
 @extends('cms.parent')
 
 @section('title',__('cms.categories'))
-@section('page-lg',__('cms.index'))
-@section('main-pg-md',__('cms.categories'))
-@section('page-md',__('cms.index'))
+@section('page_lg',__('cms.categories'))
+@section('main_page_md')
+<a href="#">Home</a>
+@endsection
+@section('page_sm',__('cms.categories'))
 
 @section('styles')
 
@@ -42,7 +44,7 @@
                                     </td>
                                     <td>{{$category->name}}</td>
                                     <td>
-                                        <a href="{{route('category.showsubcategories',$category->id)}}"
+                                        <a href="{{route('categories.show',$category->id)}}"
                                             class="btn btn-app bg-info">
                                             <i class="fas fa-envelope"></i> {{$category->subcategories_count}}
                                         </a>

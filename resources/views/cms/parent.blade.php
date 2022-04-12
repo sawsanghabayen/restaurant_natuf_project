@@ -325,7 +325,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">@yield('main_page_md')</a></li>
+              {{-- <a href="#">@yield('main_page_md')</a> --}}
+              <li class="breadcrumb-item">@yield('main_page_md')</li>
               <li class="breadcrumb-item active">@yield('page_sm')</li>
             </ol>
           </div><!-- /.col -->

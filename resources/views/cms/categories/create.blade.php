@@ -1,9 +1,11 @@
 @extends('cms.parent')
 
-@section('title','Temp')
-@section('page-lg','Temp')
-@section('main-pg-md','CMS')
-@section('page-md','Temp')
+@section('title',__('cms.categories'))
+@section('page_lg',__('cms.categories'))
+@section('main_page_md')
+<a href="#">Home</a>
+@endsection
+@section('page_sm',__('cms.categories'))
 
 @section('styles')
 

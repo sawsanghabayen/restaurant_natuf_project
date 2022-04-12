@@ -24,11 +24,11 @@ class CategoryController extends Controller
          return response()->view('cms.categories.index', ['categories' => $categories]);
     }
 
-    public function showSubCategories(Request $request , Category $category)
-    {
-        $subcategories = Category::where('id',$category->id)->first()->subcategories;
-        return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
-    }
+    // public function showSubCategories(Request $request , Category $category)
+    // {
+    //     $subcategories = Category::where('id',$category->id)->first()->subcategories;
+    //     return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
+    // }
 
 
     /**
@@ -86,7 +86,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $subcategories = Category::where('id',$category->id)->first()->subcategories;
+            return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
     }
 
     /**

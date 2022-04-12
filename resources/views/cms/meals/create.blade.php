@@ -1,9 +1,11 @@
 @extends('cms.parent')
 
-@section('title','Temp')
-@section('page-lg','Temp')
-@section('main-pg-md','CMS')
-@section('page-md','Temp')
+@section('title',__('cms.meals'))
+@section('page_lg',__('cms.meals'))
+@section('main_page_md')
+<a href="#">Home</a>
+@endsection
+@section('page_sm',__('cms.meals'))
 
 @section('styles')
 
@@ -27,8 +29,8 @@
                         @csrf
                            <div class="card-body">
                             <div class="form-group">
-                                <label>{{__('cms.category')}}</label>
-                                <select class="form-control" id="category_id">
+                                <label>{{__('cms.sub_category')}}</label>
+                                <select class="form-control" id="sub_category_id">
                                     @foreach ($subcategories as $subcategory)
                                     <option value="{{$subcategory->id}}">{{$subcategory->title}}</option>
                                     @endforeach
@@ -44,28 +46,28 @@
                                 <input type="text" class="form-control" id="description" placeholder="{{__('cms.description')}}">
                             </div>
                             <div class="form-group">
-                                <label for="price">{{__('cms.description')}}</label>
+                                <label for="price">{{__('cms.price')}}</label>
                                 <input type="number" class="form-control" id="price" placeholder="{{__('cms.price')}}">
                             </div>
-
-
                             <div class="form-group">
                                 <label for="meal_image">Sub Category Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="meal_image">
-                                        <label class="custom-file-label" for="meal_image">Choose Image</label>
+                                        <input type="file" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="image">Choose Image</label>
                                     </div>
                                 
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="active" name="active">
                                     <label class="custom-control-label" for="active">{{__('cms.active')}}</label>
                                 </div>
                             </div>
+
+
+                       
                         </div>
                             </div>
 
@@ -94,9 +96,12 @@
 <script>
     function performStore() {
         var formData = new FormData();
-        formData.append('category_id', document.getElementById('category_id').value);
+        formData.append('sub_category_id', document.getElementById('sub_category_id').value);
         formData.append('title', document.getElementById('title').value);
-        formData.append('image',document.getElementById('meal_image').files[0]);
+        formData.append('description', document.getElementById('description').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('image',document.getElementById('image').files[0]);
+        formData.append('active', document.getElementById('active').value);
 
         axios.post('/cms/admin/meals',formData)
         .then(function (response) {
