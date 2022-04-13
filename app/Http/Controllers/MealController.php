@@ -46,7 +46,7 @@ class MealController extends Controller
             'title' => 'required|string|min:3',
             'description' => 'required|string|min:3',
             'price' => 'required|regex:/^\d{1,13}(\.\d{1,4})?$/',
-            'active' => 'nullable|string|in:on',
+            'active' => 'nullable|string|in:1',
             'image' => 'required|image|mimes:png,jpg,jpeg',
         ]);
 
@@ -56,7 +56,7 @@ class MealController extends Controller
             $meal->title= $request->input('title');
             $meal->description= $request->input('description');
             $meal->price= $request->input('price');
-            $meal->active= $request->input('active');
+            $meal->active= $request->has('active');
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $imageName =  time().'_meal_image.' . $file->getClientOriginalExtension();

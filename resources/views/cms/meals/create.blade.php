@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="active" name="active">
+                                    <input type="checkbox" class="custom-control-input" checked id="active" name="active" >
                                     <label class="custom-control-label" for="active">{{__('cms.active')}}</label>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
         formData.append('description', document.getElementById('description').value);
         formData.append('price', document.getElementById('price').value);
         formData.append('image',document.getElementById('image').files[0]);
-        formData.append('active', document.getElementById('active').value);
+        formData.append('active', document.getElementById('active').checked ? 1 : 0);
 
         axios.post('/cms/admin/meals',formData)
         .then(function (response) {
