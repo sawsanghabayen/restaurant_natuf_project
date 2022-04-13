@@ -9,10 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
-
-
     public function subcategories()
 {
     return $this->hasMany(SubCategory::class, 'category_id', 'id');
 }
+
+
+public function meals()
+{
+    return $this->hasManyThrough(Meal::class, SubCategory::class, 'category_id', 'sub_category_id');
+}
+
+
 }

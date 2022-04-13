@@ -48,7 +48,9 @@
                                     <td>{{$meal->description}}</td>
                                     <td>{{$meal->subcategory->title}}</td>
                                     <td>{{$meal->price}}</td>
-                                    <td>{{$meal->active}}</td>
+                                    <td><span
+                                        class="badge @if($meal->active) bg-success @else bg-danger @endif">{{$meal->active_status}}</span>
+                                </td>
                                     <td>{{$meal->created_at}}</td>
                                     <td>{{$meal->updated_at}}</td>
                                     <td>

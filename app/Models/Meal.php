@@ -13,5 +13,10 @@ class meal extends Model
         return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id');
     }
 
+    public function getActiveStatusAttribute()
+    {
+        return $this->active ? 'Active' : 'Disabled';
+    }
+
 
 }
