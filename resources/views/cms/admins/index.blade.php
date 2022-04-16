@@ -1,11 +1,9 @@
 @extends('cms.parent')
 
-@section('title',__('cms.sub_categories'))
-@section('page_lg',__('cms.sub_categories'))
-@section('main_page_md')
-<a href="#">Home</a>
-@endsection
-@section('page_sm',__('cms.sub_categories'))
+@section('title',__('cms.admins'))
+@section('page-lg',__('cms.index'))
+@section('main-pg-md',__('cms.admins'))
+@section('page-sm',__('cms.index'))
 
 @section('styles')
 
@@ -18,7 +16,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{__('cms.sub_categories')}}</h3>
+                        <h3 class="card-title">{{__('cms.admins')}}</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -26,34 +24,38 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>{{__('cms.image')}}</th>
-                                    <th>{{__('cms.title')}}</th>
-                                    <th>{{__('cms.category')}}</th>
+                                    <th>{{__('cms.name')}}</th>
+                                    <th>{{__('cms.email')}}</th>
+                                    <th>{{__('cms.mobile')}}</th>
+                                    <th>{{__('cms.gender')}}</th>
                                     <th>{{__('cms.created_at')}}</th>
                                     <th>{{__('cms.updated_at')}}</th>
                                     <th style="width: 40px">{{__('cms.settings')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($subcategories as $subcategory)
+                                @foreach ($admins as $admin)
                                 <tr>
-                                    <td>{{$subcategory->id}}</td>
-                                    <td>
-                                        <img height="80" src="{{Storage::url($subcategory->image ?? '')}}" />
-                                    </td>
-                                    <td>{{$subcategory->title}}</td>
-                                    <td>{{$subcategory->category_name}}</td>
-                                    <td>{{$subcategory->created_at}}</td>
-                                    <td>{{$subcategory->updated_at}}</td>
+                                    <td>{{$admin->id}}</td>
+                                    <td>{{$admin->name}}</td>
+                                    <td>{{$admin->email}}</td>
+                                    <td>{{$admin->mobile}}</td>
+                                    <td>{{$admin->gender}} </td>
+                                    <td>{{$admin->created_at}}</td>
+                                    <td>{{$admin->updated_at}}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{route('subCategories.edit',$subcategory->id)}}" class="btn btn-warning">
+                                           
+                                            <a href="{{route('admins.edit', $admin->id )}}" class="btn btn-warning">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="#" onclick="confirmDelete('{{$subcategory->id}}', this)"
+                                          
+                                            
+                                            <a href="#" onclick="confirmDelete('{{$admin->id}}', this)"
                                                 class="btn btn-danger">
                                                 <i class="fas fa-trash"></i>
                                             </a>
+                                           
                                         </div>
                                     </td>
                                 </tr>
@@ -94,7 +96,7 @@
     }
 
     function performDelete(id, reference) {
-        axios.delete('/cms/admin/subCategories/'+id)
+        axios.delete('/cms/admin/admins/'+id)
         .then(function (response) {
             console.log(response);
             // toastr.success(response.data.message);

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -17,6 +17,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         $subcategories = SubCategory::with('category')->get();
+        // $subcategories = SubCategory::all();
         return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
     }
 
@@ -28,7 +29,7 @@ class SubCategoryController extends Controller
     public function create()
     {
         $categories=Category::all();
-        return response()->view('cms.subcategories.create',['categories' => $categories]);
+        return response()->view('cms.subCategories.create',['categories' => $categories]);
     }
 
     /**
@@ -88,8 +89,10 @@ class SubCategoryController extends Controller
     public function edit(SubCategory $subCategory)
     {
         $categories = Category::all();
-        return response()->view('cms.subcategories.edit', ['categories' => $categories, 'subCategory' => $subCategory]);
+        return response()->view('cms.subCategories.edit', ['categories' => $categories , 'subCategory' => $subCategory]);
+        // dd($subCategory);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -100,8 +103,37 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, SubCategory $subCategory)
     {
-        //
-    }
+        $validator = Validator($request->all(), [
+            'category_id' => 'required|numeric|exists:categories,id',
+            'title' => 'required|string|min:3',
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+        ]);
+        if (!$validator->fails()) {
+
+
+            $subCategory->category_id= $request->input('category_id');
+            $subCategory->title= $request->input('title');
+            if ($request->hasFile('image')) {
+                   //Delete category previous image.
+                   Storage::delete($subCategory->image);
+                   //Save new image.
+                $file = $request->file('image');
+                $imageName =  time().'_subcategories_image.' . $file->getClientOriginalExtension();
+                $status = $request->file('image')->storePubliclyAs('images/subcategories', $imageName);
+                $imagePath = 'images/subcategories/' . $imageName;
+                $subCategory->image = $imagePath;
+            
+            $isSaved = $subCategory->update($request->all());
+            if ($isSaved) return response()->json([
+                'message' => $isSaved ? 'Saved successfully' : 'Save failed!'
+            ], $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }}
 
     /**
      * Remove the specified resource from storage.
@@ -111,6 +143,18 @@ class SubCategoryController extends Controller
      */
     public function destroy(SubCategory $subCategory)
     {
-        //
+        $deleted = $subCategory->delete();
+        if ($deleted) {
+            Storage::delete($subCategory->image);
+        }
+        return response()->json(
+            [
+                'title' => $deleted ? 'Deleted!' : 'Delete Failed!',
+                'text' => $deleted ? 'User deleted successfully' : 'User deleting failed!',
+                'icon' => $deleted ? 'success' : 'error'
+            ],
+            $deleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
-}
+    }
+

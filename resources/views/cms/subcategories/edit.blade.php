@@ -1,9 +1,11 @@
 @extends('cms.parent')
 
-@section('title','Temp')
-@section('page-lg','Temp')
-@section('main-pg-md','CMS')
-@section('page-md','Temp')
+@section('title',__('cms.sub_categories'))
+@section('page_lg',__('cms.sub_categories'))
+@section('main_page_md')
+<a href="#">Home</a>
+@endsection
+@section('page_sm',__('cms.sub_categories'))
 
 @section('styles')
 
@@ -22,35 +24,40 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="create-form">
+            
+                    <form id="update-subcategory">
                         @csrf
+                           <div class="card-body">
                             <div class="form-group">
-                                <label for="name">{{__('cms.name')}}</label>
-                                <input type="text" class="form-control" id="name" value="{{$subcategory->name}}"
-                                    placeholder="{{__('cms.name')}}">
+                                <label>{{__('cms.category')}}</label>
+                                <select class="form-control" id="category_id">
+                                    @foreach ($categories as $category)
+                                    <option value="{{$category->id}}" @if($subCategory->category_id == $category->id) selected @endif> 
+                                        {{$category->name}} </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="description">{{__('cms.description')}}</label>
-                                <input type="description" class="form-control" id="description" value="{{$subcategory->description}}"
-                                    placeholder="{{__('cms.description')}}">
+                                <label for="title">{{__('cms.title')}}</label>
+                                <input type="text" class="form-control" id="title" value="{{$subCategory->title}}" placeholder="{{__('cms.title')}}">
                             </div>
                             <div class="form-group">
-                                <label for="subcategory_image">subcategory Image</label>
+                                <label for="subcategory_image">Sub Category Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="subcategory_image">
-                                        <label class="custom-file-label" for="subcategory_image">Choose file</label>
+                                        <label class="custom-file-label" for="subcategory_image">Choose Image</label>
                                     </div>
-                                    {{-- <div class="input-group-append">
-                                        <span class="input-group-text">Upload</span>
-                                    </div> --}}
+                                
                                 </div>
                             </div>
                         </div>
+                            </div>
+
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button type="button" onclick="performUpdate('{{$subcategory->id}}')"
+                            <button type="button" onclick="performUpdate('{{$subCategory->id}}')"
                                 class="btn btn-primary">{{__('cms.save')}}</button>
                         </div>
                     </form>
@@ -66,25 +73,24 @@
 
 @section('scripts')
 <script src="{{asset('cms/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
-{{-- <script src="{{asset('js/axios.js')}}"></script> --}}
 <script>
     $(function () { bsCustomFileInput.init() });
 </script>
 <script>
     function performUpdate(id) {
         var formData = new FormData();
-        formData.append('name',document.getElementById('name').value);
-        formData.append('description',document.getElementById('description').value);
+        formData.append('category_id', document.getElementById('category_id').value);
+        formData.append('title', document.getElementById('title').value);
         if(document.getElementById('subcategory_image').files[0] != undefined) {
             formData.append('image',document.getElementById('subcategory_image').files[0]);
         }
         formData.append('_method','PUT');
 
-        axios.post('/cms/admin/categories/{{$subcategory->id}}', formData)
+        axios.post('/cms/admin/subCategories/{{$subCategory->id}}',formData)
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
-            window.location.href = '/cms/admin/categories';
+            window.location.href = '/cms/admin/subCategories';
         })
         .catch(function (error) {
             console.log(error.response);

@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" checked id="active" name="active" >
+                                    <input type="checkbox" class="custom-control-input" id="active" name="active"  >
                                     <label class="custom-control-label" for="active">{{__('cms.active')}}</label>
                                 </div>
                             </div>

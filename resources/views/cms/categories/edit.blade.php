@@ -24,6 +24,7 @@
                     <!-- form start -->
                     <form id="create-form">
                         @csrf
+                        <div class="card-body">
                             <div class="form-group">
                                 <label for="name">{{__('cms.name')}}</label>
                                 <input type="text" class="form-control" id="name" value="{{$category->name}}"
@@ -47,6 +48,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">

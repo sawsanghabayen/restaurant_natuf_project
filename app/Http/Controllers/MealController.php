@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Meal;
 use App\Models\SubCategory;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,6 +30,7 @@ class MealController extends Controller
      */
     public function create()
     {
+
         $subcategories=SubCategory::all();
         return response()->view('cms.meals.create',['subcategories' => $subcategories]);
     }
@@ -46,7 +47,7 @@ class MealController extends Controller
             'title' => 'required|string|min:3',
             'description' => 'required|string|min:3',
             'price' => 'required|regex:/^\d{1,13}(\.\d{1,4})?$/',
-            'active' => 'nullable|string|in:1',
+            'active' => 'required|boolean',
             'image' => 'required|image|mimes:png,jpg,jpeg',
         ]);
 
@@ -56,7 +57,7 @@ class MealController extends Controller
             $meal->title= $request->input('title');
             $meal->description= $request->input('description');
             $meal->price= $request->input('price');
-            $meal->active= $request->has('active');
+            $meal->active= $request->input('active');
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $imageName =  time().'_meal_image.' . $file->getClientOriginalExtension();
@@ -84,7 +85,7 @@ class MealController extends Controller
      */
     public function show(meal $meal)
     {
-        //
+      
     }
 
     /**
@@ -95,7 +96,9 @@ class MealController extends Controller
      */
     public function edit(meal $meal)
     {
-        //
+        $subcategories = SubCategory::all();
+
+        return response()->view('cms.meals.edit', ['meal' => $meal ,'subcategories'=>$subcategories]);
     }
 
     /**
@@ -107,7 +110,41 @@ class MealController extends Controller
      */
     public function update(Request $request, meal $meal)
     {
-        //
+        $validator = Validator($request->all(), [
+            'sub_category_id' => 'required|numeric|exists:sub_categories,id',
+            'title' => 'required|string|min:3',
+            'description' => 'required|string|min:3',
+            'price' => 'required|regex:/^\d{1,13}(\.\d{1,4})?$/',
+            'active' => 'required|boolean',
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+        ]);
+
+        if (!$validator->fails()) {
+
+
+            // $meal->sub_category_id= $request->input('sub_category_id');
+            // $meal->title= $request->input('title');
+            // $meal->description= $request->input('description');
+            // $meal->price= $request->input('price');
+            // $meal->active= $request->has('active');
+            // if ($request->hasFile('image')) {
+            //     $file = $request->file('image');
+            //     $imageName =  time().'_meal_image.' . $file->getClientOriginalExtension();
+            //     $status = $request->file('image')->storePubliclyAs('images/meals', $imageName);
+            //     $imagePath = 'images/meals/' . $imageName;
+            //     $meal->image = $imagePath;
+            
+            $isSaved = $meal->update($request->all());
+            if ($isSaved) return response()->json([
+                'message' => $isSaved ? 'Saved successfully' : 'Save failed!'
+            ], $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        
     }
 
     /**
@@ -118,6 +155,17 @@ class MealController extends Controller
      */
     public function destroy(meal $meal)
     {
-        //
+        $deleted = $meal->delete();
+        if ($deleted) {
+            Storage::delete($meal->image);
+        }
+        return response()->json(
+            [
+                'title' => $deleted ? 'Deleted!' : 'Delete Failed!',
+                'text' => $deleted ? 'User deleted successfully' : 'User deleting failed!',
+                'icon' => $deleted ? 'success' : 'error'
+            ],
+            $deleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
-}
+    }

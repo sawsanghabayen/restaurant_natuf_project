@@ -87,7 +87,9 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $subcategories = Category::where('id',$category->id)->first()->subcategories;
+        // dd($subcategories);
             return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
+       
     }
 
     /**
@@ -98,7 +100,6 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-
         return response()->view('cms.categories.edit', ['category' => $category]);
     }
 
@@ -124,7 +125,7 @@ class CategoryController extends Controller
                 Storage::delete($category->image);
                 //Save new image.
                 $file = $request->file('image');
-                $imageName = Carbon::now() . '_category_image.' . $file->getClientOriginalExtension();
+                $imageName = time(). '_category_image.' . $file->getClientOriginalExtension();
                 $request->file('image')->storePubliclyAs('images/categories', $imageName);
                 $imagePath = 'images/categories/' . $imageName;
                 $category->image = $imagePath;

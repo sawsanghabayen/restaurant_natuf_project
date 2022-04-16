@@ -1,9 +1,11 @@
 @extends('cms.parent')
 
-@section('title','Temp')
-@section('page-lg','Temp')
-@section('main-pg-md','CMS')
-@section('page-md','Temp')
+@section('title',__('cms.sub_categories'))
+@section('page_lg',__('cms.sub_categories'))
+@section('main_page_md')
+<a href="#">Home</a>
+@endsection
+@section('page_sm',__('cms.sub_categories'))
 
 @section('styles')
 
@@ -80,7 +82,7 @@
         formData.append('title', document.getElementById('title').value);
         formData.append('image',document.getElementById('subcategory_image').files[0]);
 
-        axios.post('/cms/admin/subcategories',formData)
+        axios.post('/cms/admin/subCategories',formData)
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);

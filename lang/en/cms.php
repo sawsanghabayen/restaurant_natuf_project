@@ -59,8 +59,13 @@ return [
     'create_sub_category'=>'Create Sub Category',
     'edit_sub_category'=>'Edit Sub Category',
     'title'=>'Title',
-    'price'=>'Price',
     'create_meal'=>'Create Meal',
+    'price'=>'Price',
+    'mobile'=>'Mobile',
+    'female'=>'Female',
+    'male'=>'Male',
+
+    
     
     
 

@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model
 {
     use HasFactory;
+    protected $fillable = ['*'];
+    protected $appends = ['category_name'];
 
+    public function getCategoryNameAttribute()
+    {
+        return $this->category()->first()->name;
+    }
+
+    
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -18,6 +26,9 @@ class SubCategory extends Model
 {
     return $this->hasMany(Meal::class, 'sub_category_id', 'id');
 }
+// protected $with = ['category'];
+
+
 
 
 }
