@@ -109,7 +109,7 @@
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
-            document.getElementById('create-meal').reset();
+            window.location.href = '/cms/admin/meals';
         })
         .catch(function (error) {
             console.log(error.response);

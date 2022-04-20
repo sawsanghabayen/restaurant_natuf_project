@@ -1,161 +1,273 @@
-    @extends('front.parent')
-    @section('content')
-          <div class="latest-products">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="section-heading">
-              <h2>Latest Meals</h2>
-              <a href="products.html">view all Meals <i class="fa fa-angle-right"></i></a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Restaurant</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/0866ae2c30.js" crossorigin="anonymous"></script>
+
+<style>
+body {
+	font-family: 'Varela Round', sans-serif;
+}
+.form-control {
+	box-shadow: none;		
+	font-weight: normal;
+	font-size: 13px;
+}
+.navbar {
+	background: #fff;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-bottom: 1px solid #dfe3e8;
+	border-radius: 0;
+}
+.nav-link img {
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	margin: -8px 0;
+	float: left;
+	margin-right: 10px;
+}
+.navbar .navbar-brand {
+	padding-left: 0;
+	font-size: 20px;
+	padding-right: 50px;
+}
+.navbar .navbar-brand b {
+	color: #33cabb;		
+}
+.navbar .form-inline {
+	display: inline-block;
+}
+.navbar a {
+	color: #888;
+	font-size: 15px;
+}
+.search-box {
+	position: relative;
+}	
+.search-box input {
+	padding-right: 35px;
+	border-color: #dfe3e8;
+	border-radius: 4px !important;
+	box-shadow: none
+}
+.search-box .input-group-text {
+	min-width: 35px;
+	border: none;
+	background: transparent;
+	position: absolute;
+	right: 0;
+	z-index: 9;
+	padding: 7px;
+	height: 100%;
+}
+.search-box i {
+	color: #a0a5b1;
+	font-size: 19px;
+}
+.navbar .sign-up-btn {
+	min-width: 110px;
+	max-height: 36px;
+}
+.navbar .dropdown-menu {
+	color: #999;
+	font-weight: normal;
+	border-radius: 1px;
+	border-color: #e5e5e5;
+	box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.navbar a, .navbar a:active {
+	color: #888;
+	padding: 8px 20px;
+	background: transparent;
+	line-height: normal;
+}
+.navbar .navbar-form {
+	border: none;
+}
+.navbar .action-form {
+	width: 280px;
+	padding: 20px;
+	left: auto;
+	right: 0;
+	font-size: 14px;
+}
+.navbar .action-form a {		
+	color: #33cabb;
+	padding: 0 !important;
+	font-size: 14px;
+}
+.navbar .action-form .hint-text {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+.navbar .btn-primary, .navbar .btn-primary:active {
+	color: #fff;
+	background: #33cabb !important;
+	border: none;
+}	
+.navbar .btn-primary:hover, .navbar .btn-primary:focus {		
+	color: #fff;
+	background: #31bfb1 !important;
+}
+.navbar .social-btn .btn, .navbar .social-btn .btn:hover {
+	color: #fff;
+	margin: 0;
+	padding: 0 !important;
+	font-size: 13px;
+	border: none;
+	transition: all 0.4s;
+	text-align: center;
+	line-height: 34px;
+	width: 47%;
+	text-decoration: none;
+}
+.navbar .social-btn .facebook-btn {
+	background: #507cc0;
+}
+.navbar .social-btn .facebook-btn:hover {
+	background: #4676bd;
+}
+.navbar .social-btn .twitter-btn {
+	background: #64ccf1;
+}
+.navbar .social-btn .twitter-btn:hover {
+	background: #4ec7ef;
+}
+.navbar .social-btn .btn i {
+	margin-right: 5px;
+	font-size: 16px;
+	position: relative;
+	top: 2px;
+}
+.or-seperator {
+	margin-top: 32px;
+	text-align: center;
+	border-top: 1px solid #e0e0e0;
+}
+.or-seperator b {
+	color: #666;
+	padding: 0 8px;
+	width: 30px;
+	height: 30px;
+	font-size: 13px;
+	text-align: center;
+	line-height: 26px;
+	background: #fff;
+	display: inline-block;
+	border: 1px solid #e0e0e0;
+	border-radius: 50%;
+	position: relative;
+	top: -15px;
+	z-index: 1;
+}
+.navbar .action-buttons .dropdown-toggle::after {
+	display: none;
+}
+.form-check-label input {
+	position: relative;
+	top: 1px;
+}
+@media (min-width: 1200px){
+	.form-inline .input-group {
+		width: 300px;
+		margin-left: 30px;
+	}
+}
+@media (max-width: 768px){
+	.navbar .dropdown-menu.action-form {
+		width: 100%;
+		padding: 10px 15px;
+		background: transparent;
+		border: none;
+	}
+	.navbar .form-inline {
+		display: block;
+	}
+	.navbar .input-group {
+		width: 100%;
+	}
+}
+</style>
+<script>
+// Prevent dropdown menu from closing when click inside the form
+$(document).on("click", ".action-buttons .dropdown-menu", function(e){
+	e.stopPropagation();
+});
+</script>
+</head> 
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a href="#" class="navbar-brand"><b>
+		@if(auth()->user()!=null)
+		{{auth()->user()->first_name}}
+		@endif
+	</b>
+		
+	</a>  		
+	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<!-- Collection of nav links, forms, and other content for toggling -->
+	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+		<div class="navbar-nav">
+			<a href="#" class="nav-item nav-link">Home</a>
+			<a href="#" class="nav-item nav-link">About</a>			
+			<div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Services</a>
+				<div class="dropdown-menu">					
+					<a href="#" class="dropdown-item">Web Design</a>
+					<a href="#" class="dropdown-item">Web Development</a>
+					<a href="#" class="dropdown-item">Graphic Design</a>
+					<a href="#" class="dropdown-item">Digital Marketing</a>
+                </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="#"><img src="{{asset('front/assets/images/meal_1.jpeg')}}" alt=""></a>
-              <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <h6>$25.75</h6>
-                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                <ul class="stars">
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-                <span>Reviews (24)</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="#"><img src="{{asset('front/assets/images/meal_1.jpeg')}}" alt=""></a>
-              <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <h6>$30.25</h6>
-                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                <ul class="stars">
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-                <span>Reviews (21)</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="#"><img src="{{asset('front/assets/images/meal_1.jpeg')}}" alt=""></a>
-              <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <h6>$20.45</h6>
-                <p>Resturant</p>
-                <ul class="stars">
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-                <span>Reviews (36)</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="#"><img src="{{asset('front/assets/images/meal_1.jpeg')}}" alt=""></a>
-              <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <h6>$15.25</h6>jpeg
-                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                <ul class="stars">
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-                <span>Reviews (48)</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="#"><img src="{{asset('front/assets/images/meal_1.jpeg')}}" alt=""></a>
-              <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <h6>$12.50</h6>
-                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                <ul class="stars">
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-                <span>Reviews (16)</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="#"><img src="{{asset('front/assets/images/meal_1.jpeg')}}" alt=""></a>
-              <div class="down-content">
-                <a href="#"><h4>Tittle goes here</h4></a>
-                <h6>$22.50</h6>
-                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                <ul class="stars">
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                  <li><i class="fa fa-star"></i></li>
-                </ul>
-                <span>Reviews (32)</span>
-              </div>
-            </div>
-          </div>
+			<a href="#" class="nav-item nav-link active">Pricing</a>
+			<a href="#" class="nav-item nav-link">Blog</a>
+			<a href="#" class="nav-item nav-link">Contact</a>
+		</div>
+		<form class="navbar-form form-inline">
+			<div class="input-group search-box">								
+				<input type="text" id="search" class="form-control" placeholder="Search here...">
+				<div class="input-group-append">
+					<span class="input-group-text">
+						<i class="material-icons">&#xE8B6;</i>
+					</span>
+				</div>
+			</div>
+		</form>
+		<div class="navbar-nav ml-auto action-buttons">
+			<div class="nav-item dropdown">
+				<a href="{{route('cms.login')}}"  class="nav-link  mr-4">Login</a>
+				
+             
+               
+			</div>
+			<div class="nav-item dropdown">
+				<a class="nav-link"  href="{{route('cms.user.logout')}}" role="button">
+					<i class="fa-solid fa-right-from-bracket"></i>
+				  </a>
+             
+               
+			</div>
+
+			<div class="nav-item dropdown">
+				<a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Sign up</a>
+               
+			</div>
         </div>
-      </div>
-    </div>
-
-    <div class="best-features">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="section-heading">
-              <h2>About Resturant</h2>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="left-content">
-              <h4>Looking for the best Meals?</h4>
-              <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem facere unde et voluptas labore vero repudiandae. Pariatur facere perferendis officiis ex ad quisquam dignissimos fuga ducimus eveniet, nihil quis facilis?</p>
-              <ul class="featured-list">
-                <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-                <li><a href="#">Consectetur an adipisicing elit</a></li>
-                <li><a href="#">It aquecorporis nulla aspernatur</a></li>
-                <li><a href="#">Corporis, omnis doloremque</a></li>
-                <li><a href="#">Non cum id reprehenderit</a></li>
-              </ul>
-              <a href="about.html" class="filled-button">Read More</a>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="right-image">
-              <img src="{{asset('front/assets/images/about2.jpeg')}}" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    @endsection
-
-
-
-
-
-    
-  
+	</div>
+</nav>
+</body>
+</html>

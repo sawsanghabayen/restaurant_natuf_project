@@ -3,6 +3,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AuthController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -17,34 +18,45 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('cms/parent');
-});
+// Route::get('/', function () {
+//     return view('cms/parent');
+// });
 
 // Route::get('/index', function () {
 //     return view('cms/categories/index');
 // });
 
-Route::prefix('cms/admin')->group(function () {
+
+Route::prefix('cms/admin')->middleware('auth:admin')->group(function () {
+    Route::view('/', 'cms.temp')->name('cms.dashboard');
     Route::resource('categories', CategoryController::class);
     Route::resource('subCategories', SubCategoryController::class);
     Route::resource('meals', MealController::class);
     Route::resource('admins', AdminController::class);
-    // Route::get('{category}/subcategories', [CategoryController::class, 'showSubCategories'])->name('category.showsubcategories');
+    Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
+
+});
+
+
+
+Route::prefix('/rest')->group(function () {
+    Route::view('/', 'front.index')->name('rest.index');
+    Route::get('logout', [AuthController::class, 'logout'])->name('cms.user.logout');
 
 
 });
 
-// route::prefix('cms/admin')->group(function () {
-//     route::view('/' , 'front.parent');
-//     route::view('/index' , 'front.index');
-//     route::view('/about' , 'front.about');
-//     route::view('/products' , 'front.products');
+Route::prefix('cms/')->middleware('guest:user')->group(function () {
+    Route::get('login', [AuthController::class, 'showLoginView'])->name('cms.login');
+    Route::post('login', [AuthController::class, 'login']);
+   
+});
 
-//     route::view('/contact' , 'front.contact');
+Route::prefix('cms/admin')->middleware('guest:admin')->group(function () {
+    Route::get('login', [AuthController::class, 'showLoginView'])->name('cms.admin.login');
+    Route::post('login', [AuthController::class, 'login']);
 
 
+ });
 
 
-    
-// });
