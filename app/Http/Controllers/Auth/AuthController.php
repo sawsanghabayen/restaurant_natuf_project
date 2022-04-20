@@ -67,7 +67,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         return redirect()->route($this->guard =='admin' ? 'cms.admin.login' : 'cms.login');
 
-    //    $this->guard =='admin' ? return redirect()->route('cms.admin.login') :return redirect()->route('cms.login'))
         
     }
 
