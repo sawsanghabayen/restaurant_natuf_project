@@ -249,7 +249,7 @@ $(document).on("click", ".action-buttons .dropdown-menu", function(e){
 		</form>
 		<div class="navbar-nav ml-auto action-buttons">
 			<div class="nav-item dropdown">
-				<a href="{{route('cms.login')}}"  class="nav-link  mr-4">Login</a>
+				<a href="{{'cms/user/login'}}"  class="nav-link  mr-4">Login</a>
 				
              
                

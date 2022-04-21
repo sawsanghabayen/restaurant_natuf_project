@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      * 
      */
  
-    // public const HOME='/rest';
+     public const HOME='/rest';
 
 
 

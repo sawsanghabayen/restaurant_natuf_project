@@ -1,119 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Sign in </title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('cms/plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{{asset('cms/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('cms/dist/css/adminlte.min.css')}}">
-  <link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
+	<title>Login V18</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{asset('auth/images/icons/favicon.ico')}}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/vendor/bootstrap/css/bootstrap.min.css')}}"><!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}"><!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/fonts/Linearicons-Free-v1.0.0/icon-font.min.css')}}"><!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/vendor/animate/animate.css')}}"><!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/vendor/css-hamburgers/hamburgers.min.css')}}"><!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{{asset('auth/vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('auth/css/main.css')}}">
+	<link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
+<!--===============================================================================================-->
 </head>
+<body style="background-color: #666666;">
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" >
+					<span class="login100-form-title p-b-43">
+						Login to continue
+					</span>
+					
+					
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" id="email">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Email</span>
+					</div>
+					
+					
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<input class="input100" type="password"  id="password">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Password</span>
+					</div>
+					
+				
+						{{-- <div class="row">
+							<div class="col-8">
+							  <div class="icheck-primary">
+								<input type="checkbox" id="remember">
+								<label for="remember">
+								  Remember Me
+								</label>
+							  </div>
+							</div>--}}
+							<div class="flex-sb-m w-full p-t-3 p-b-32">
+								<div class="contact100-form-checkbox">
+									<input class="input-checkbox100"  type="checkbox" id="remember">
+									<label class="label-checkbox100" for="remember" >
+										Remember me
+									</label>
+								</div>
+								<div>
+									<a href="#" class="txt1">
+										Forgot Password?
+									</a>
+								</div>
+							</div>
+					
 
-<body class="hold-transition login-page">
-  <div class="login-box">
-    <!-- /.login-logo -->
-    <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-        <a  class="h1"><b>Sign</b>In</a>
-      </div>
-      <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+			
 
-        <form>
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" id="email">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" id="password">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="remember">
-                <label for="remember">
-                  Remember Me
-                </label>
-              </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <button type="button" onclick="performLogin()" class="btn btn-primary btn-block">Sign In</button>
-            </div>
-            <!-- /.col -->
-          </div>
-        </form>
-        <!-- /.social-auth-links -->
+					<div class="container-login100-form-btn">
+						<button type="button" onclick="performLogin()" class="btn btn-primary btn-block">Sign In</button>
+					</div>
+					
+					<div class="text-center p-t-46 p-b-20">
+						<span class="txt2">
+							or sign up using
+						</span>
+					</div>
 
-        <p class="mb-1">
-          <a href="#">I forgot my password</a>
-        </p>
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-  </div>
-  <!-- /.login-box -->
+					<div class="login100-form-social flex-c-m">
+						<a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+							<i class="fa fa-facebook-f" aria-hidden="true"></i>
+						</a>
 
-  <!-- jQuery -->
-  <script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
-  <!-- Bootstrap 4 -->
-  <script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <!-- AdminLTE App -->
-  <script src="{{asset('cms/dist/js/adminlte.min.js')}}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+						<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
 
-  <script>
-    function performLogin() {
-      
-        axios.post('{{route('cms.' . $guard .'login')}}', {
-            email: document.getElementById('email').value,
-            password: document.getElementById('password').value,
-            remember: document.getElementById('remember').checked,
-        })
-        .then(function (response) {
-            console.log(response);
-            toastr.success(response.data.message);
-            @if ($guard =='')
-               window.location.href = '{{route('rest.index')}}';
-              
+				<div class="login100-more" style="background-image: url({{asset('auth/images/baraa.jpg')}});">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+<!--===============================================================================================-->
+	<script src="{{asset('auth/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('auth/vendor/animsition/js/animsition.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('auth/vendor/bootstrap/js/popper.js')}}"></script>
+	<script src="{{asset('auth/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('auth/vendor/select2/select2.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('auth/vendor/daterangepicker/moment.min.js')}}"></script>
+	<script src="{{asset('auth/vendor/daterangepicker/daterangepicker.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('auth/vendor/countdowntime/countdowntime.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('auth/js/main.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+
+<script>
+	function performLogin() {
+		
+		axios.post('/cms/login', {
+			email: document.getElementById('email').value,
+			password: document.getElementById('password').value,
+			remember: document.getElementById('remember').checked,
+		})
+		.then(function (response) {
+			console.log(response);
+			toastr.success(response.data.message);
+			@if ($guard =='admin' ||$guard =='resturant' )
+               window.location.href = '/cms/admin';
             @else
-                
-               window.location.href = '{{route('cms.dashboard')}}';
-
-
+               window.location.href = '/front/index';
             @endif
 
-
-            //  window.location.href = $guard =='' ? '/rest/':'/cms/admin';}} 
-              // window.location.href = '{{route('cms.dashboard')}}';
-
-        })
-        .catch(function (error) {
-            console.log(error.response);
-            toastr.error(error.response.data.message);
-        });      
-    }
+		})
+		.catch(function (error) {
+			console.log(error.response);
+			toastr.error(error.response.data.message);
+		});      
+	}
   </script>
-</body>
 
+</body>
 </html>
