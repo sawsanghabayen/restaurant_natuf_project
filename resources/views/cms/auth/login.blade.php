@@ -47,16 +47,7 @@
 						<span class="label-input100">Password</span>
 					</div>
 					
-				
-						{{-- <div class="row">
-							<div class="col-8">
-							  <div class="icheck-primary">
-								<input type="checkbox" id="remember">
-								<label for="remember">
-								  Remember Me
-								</label>
-							  </div>
-							</div>--}}
+			
 							<div class="flex-sb-m w-full p-t-3 p-b-32">
 								<div class="contact100-form-checkbox">
 									<input class="input-checkbox100"  type="checkbox" id="remember">
@@ -133,10 +124,10 @@
 		.then(function (response) {
 			console.log(response);
 			toastr.success(response.data.message);
-			@if ($guard =='admin' ||$guard =='resturant' )
+			@if ($guard =='admin')
                window.location.href = '/cms/admin';
             @else
-               window.location.href = '/front/index';
+               window.location.href = '/rest';
             @endif
 
 		})
