@@ -103,7 +103,8 @@
         if(document.getElementById('meal_image').files[0] != undefined) {
             formData.append('image',document.getElementById('meal_image').files[0]);
         }
-        formData.append('_method','PUT');        formData.append('active', document.getElementById('active').checked ? 1 : 0);
+        formData.append('_method','PUT');     
+        formData.append('active', document.getElementById('active').checked ? 1 : 0);
 
         axios.post('/cms/admin/meals',formData)
         .then(function (response) {

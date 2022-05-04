@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\favorite;
+use App\Models\Meal;
 use App\Models\resturant;
 use Illuminate\Http\Request;
 
@@ -12,9 +16,22 @@ class ResturantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $name=$request->query('name');
+        $comments=Comment::all();
+        $resturants=Resturant::all();
+        $favorites=favorite::all();
+        $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
+        $allcategories=Category::all();
+        $categories=Category::paginate(6 ,['*'],'categories');
+        $meals=Meal::paginate(6,['*'],'meals');
+        $meals->when($name ,function($query , $name){
+            return $query->where('name' ,'LIKE',"%{$name}%");
+        });
+
+        
+        return response()->view('front.index',['allcategories'=>$allcategories,'resturants'=>$resturants,'comments'=>$comments ,'favorites'=>$favorites,'latestmeals'=>$latestmeals,'meals'=>$meals ,'categories'=>$categories]);
     }
 
     /**

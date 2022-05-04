@@ -6,6 +6,8 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
+use Spatie\Permission\Models\Permission;
+
 
 class AdminController extends Controller
 {
@@ -14,11 +16,68 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        // $this->authorizeResource(Admin::class, 'admin');
+    }
+
     public function index()
     {
-        $admins=Admin::all();
+        $admins=Admin::withcount('permissions')->get();
         return response()->view('cms.admins.index',['admins'=>$admins]);
     }
+    
+    public function editAdminPermissions(Request $request, Admin $admin)
+    {
+
+        //  $this->authorize('viewpermission', Admin::class);
+        $permissions = Permission::where('guard_name', '=', 'admin')->get();
+        $adminPermissions = $admin->permissions;
+        if (count($adminPermissions) > 0) {
+            foreach ($permissions as $permission) {
+                $permission->setAttribute('assigned', false);
+                foreach ($adminPermissions as $adminPermission) {
+                    if ($permission->id == $adminPermission->id) {
+                        $permission->setAttribute('assigned', true);
+                    }
+                }
+            }
+        }
+
+        return response()->view('cms.admins.admin-permissions', ['admin' => $admin, 'permissions' => $permissions]);
+    }
+
+    /**
+     * Update role permissions.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAdminPermissions(Request $request, Admin $admin)
+    {
+        $validator = Validator($request->all(), [
+            'permission_id' => 'required|numeric|exists:permissions,id',
+        ]);
+
+        if (!$validator->fails()) {
+            //SELECT * FROM permissions WHERE id = 1 AND guard_name = 'admin';
+            $permission = Permission::findOrFail($request->input('permission_id'));
+            if ($admin->hasPermissionTo($permission)) {
+                $admin->revokePermissionTo($permission);
+            } else {
+                $admin->givePermissionTo($permission);
+            }
+            return response()->json(
+                ['message' => 'Role updated successfully'],
+                Response::HTTP_OK
+            );
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.

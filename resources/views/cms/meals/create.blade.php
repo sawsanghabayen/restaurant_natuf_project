@@ -29,11 +29,18 @@
                         @csrf
                            <div class="card-body">
                             <div class="form-group">
+                                <label>{{__('cms.category')}}</label>
+                                <select class="form-control" id="category_id">
+                                    <option  value="-1">Select Category</option>
+                                    @foreach ($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label>{{__('cms.sub_category')}}</label>
                                 <select class="form-control" id="sub_category_id">
-                                    @foreach ($subcategories as $subcategory)
-                                    <option value="{{$subcategory->id}}">{{$subcategory->title}}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
@@ -50,7 +57,7 @@
                                 <input type="number" class="form-control" id="price" placeholder="{{__('cms.price')}}">
                             </div>
                             <div class="form-group">
-                                <label for="meal_image">Sub Category Image</label>
+                                <label for="meal_image">Meal Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="image">
@@ -94,6 +101,32 @@
     $(function () { bsCustomFileInput.init() });
 </script>
 <script>
+
+    $('#category_id').on('change',function(){
+        if(this.value!==-1)
+        getSubCategories(this.value);
+        else
+        $('#sub_category_id').empty();
+
+    });
+
+     function getSubCategories(categoryId){
+        axios.get('/cms/admin/categories/'+categoryId)
+        .then(function (response) {
+            console.log(response);
+            // console.log(response.data.data);
+            $('#sub_category_id').empty();
+            $.each(response.data.data , function(i, item){
+             $('#sub_category_id').append(new Option(  item['title'] ,item['id'] ))
+             });
+           
+            
+        }).catch(function (error) {
+            console.log(error.response);
+        });
+    }
+
+    
     function performStore() {
         var formData = new FormData();
         formData.append('sub_category_id', document.getElementById('sub_category_id').value);

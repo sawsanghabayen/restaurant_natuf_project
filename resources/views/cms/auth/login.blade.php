@@ -56,7 +56,7 @@
 									</label>
 								</div>
 								<div>
-									<a href="#" class="txt1">
+									<a href="{{route('password.forgot')}}" class="txt1">
 										Forgot Password?
 									</a>
 								</div>
@@ -71,19 +71,11 @@
 					
 					<div class="text-center p-t-46 p-b-20">
 						<span class="txt2">
-							or sign up using
+							<a href="{{route('cms.register')}}" class="txt1"> sign up </a>
 						</span>
 					</div>
 
-					<div class="login100-form-social flex-c-m">
-						<a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-							<i class="fa fa-facebook-f" aria-hidden="true"></i>
-						</a>
-
-						<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-							<i class="fa fa-twitter" aria-hidden="true"></i>
-						</a>
-					</div>
+				
 				</form>
 
 				<div class="login100-more" style="background-image: url({{asset('auth/images/baraa.jpg')}});">
@@ -125,9 +117,9 @@
 			console.log(response);
 			toastr.success(response.data.message);
 			@if ($guard =='admin')
-               window.location.href = '/cms/admin';
+               window.location.href = '/cms/admin/dashboards';
             @else
-               window.location.href = '/rest';
+               window.location.href = '/rest/resturants';
             @endif
 
 		})

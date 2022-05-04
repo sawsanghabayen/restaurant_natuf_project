@@ -44,14 +44,14 @@
                                     </td>
                                     <td>{{$category->name}}</td>
                                     <td>
-                                        <a href="{{route('categories.show',$category->id)}}"
+                                        <a href="{{route('subCategories.index',['category_id'=>$category->id])}}"
                                             class="btn btn-app bg-info">
                                             <i class="fas fa-envelope"></i> {{$category->subcategories_count}}
                                         </a>
                                     </td>
                                     <td>{{$category->description}}</td>
-                                    <td>{{$category->created_at}}</td>
-                                    <td>{{$category->updated_at}}</td>
+                                    <td>{{$category->created_at->diffForHumans()}}</td>
+                                    <td>{{$category->updated_at->diffForHumans()}}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{route('categories.edit',$category->id)}}" class="btn btn-warning">

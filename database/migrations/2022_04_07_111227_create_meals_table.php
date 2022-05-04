@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('price');
             $table->boolean('active')->default(true);
             $table->timestamps();
-            $table->foreignId('sub_category_id')->constrained()->restrictOnDelete();
+            $table->foreignId('sub_category_id')->constrained()->cascadeOnDelete();
 
 
         });

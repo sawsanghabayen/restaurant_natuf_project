@@ -31,48 +31,24 @@
                     <form id="create-form" >
                         <h2 class="form-title">Create account User</h2>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name"/>
+                            <input type="text" class="form-input" id="first_name" placeholder="First Name"/>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email"/>
+                            <input type="text" class="form-input"  id="last_name" placeholder="Last Name"/>
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="mobile">{{__('cms.mobile')}}</label>
-                            <input type="text" class="form-control" id="mobile" placeholder="{{__('cms.mobile')}}">
-                        </div> --}}
                         <div class="form-group">
-                            <input type="text" class="form-input" id="mobile" name="mobile" placeholder="phone number"/>
+                            <input type="email" class="form-input" id="email" placeholder="Your Email"/>
                         </div>
-                        {{-- <div class="form-group">
-                            <select class="form-control" id="gender">
-                                <option value="Female" >female</option>
-                                <option value="Male">male</option>
-                            </select>
-                        </div> --}}
-
                         <div class="form-group">
-                            <label>gender</label>
-                            <select class="form-input" id="gender">
-                                <option value="Female" >female</option>
-                                <option value="Male">male</option>
-                            </select>
+                            <input type="text" class="form-input" id="mobile"  placeholder="phone number"/>
                         </div>
-
-                    
                         <div class="form-group">
-                            <input type="text" class="form-input" name="password" id="password" placeholder="Password"/>
+                            <input type="text" class="form-input"  id="password" placeholder="Password"/>
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
 
-                        {{-- <div class="card-footer">
-                            <button type="button" onclick="performStore()"
-                                class="btn btn-primary">Sign up</button>
-                        </div> --}}
-
-
-
                         <div class="form-group">
-                            <button type="button" onclick="performStore()" id="submit" class="form-submit" >Sign up</button>
+                            <button type="button" onclick="performStore()" class="form-submit" >Sign up</button>
                         </div>
                     </form>
                     <p class="loginhere">
@@ -90,18 +66,20 @@
     <script>
         function performStore() {
          
-            axios.post('/front/users', {
-                name: document.getElementById('name').value,
+            axios.post('/cms/user/register', {
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value,
                 email: document.getElementById('email').value,
-                mobile: document.getElementById('mobile').value,
-                gender: document.getElementById('gender').value,
                 password: document.getElementById('password').value,
-                // role_id: document.getElementById('role_id').value,
+                mobile: document.getElementById('mobile').value,
             })
             .then(function (response) {
                 console.log(response);
                 toastr.success(response.data.message);
                 document.getElementById('create-form').reset();
+                window.location.href = "{{route('cms.login','user')}}";
+
+
             })
             .catch(function (error) {
                 console.log(error.response);
@@ -111,5 +89,5 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 </html>

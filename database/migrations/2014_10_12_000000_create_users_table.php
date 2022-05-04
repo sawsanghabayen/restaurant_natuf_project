@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('mobile',11);
             $table->string('image')->nullable();
             $table->string('email',45)->unique();
+            $table->text('address');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

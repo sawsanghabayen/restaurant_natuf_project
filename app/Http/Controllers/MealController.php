@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Meal;
 use App\Models\SubCategory;
+use App\Models\Category;
+use App\Models\Favorite;
+use App\Models\Resturant;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -16,12 +20,34 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function __construct()
     {
+        $this->authorizeResource(Meal::class, 'meal'
+        , ['except' => [ 'index']]);
+    }
+    public function index(Request $request)
+    {
+        if (Auth::guard('admin')->check()){
         $meals = Meal::with('subcategory')->get();
+        if($request->has('sub_category_id')){
+            $meals =Meal::where('sub_category_id','=',$request->input('sub_category_id'))->get();
+        }
         return response()->view('cms.meals.index', ['meals' => $meals]);
     }
-
+    else{
+         //front
+        $favorites=Favorite::all();
+        $resturants=Resturant::all();
+        $meals = Meal::paginate(9 ,['*'],'meals');
+        // dd($meals);
+         $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
+         if($request->has('id')){
+             $meals =Meal::where('sub_category_id','=',$request->input('id'))->paginate();
+         }
+        return response()->view('front.meals', ['meals' => $meals ,'favorites'=>$favorites,'resturants'=>$resturants,'latestmeals'=>$latestmeals ]);
+    }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -31,8 +57,8 @@ class MealController extends Controller
     public function create()
     {
 
-        $subcategories=SubCategory::all();
-        return response()->view('cms.meals.create',['subcategories' => $subcategories]);
+        $categories=Category::all();
+        return response()->view('cms.meals.create',['categories' => $categories]);
     }
     /**
      * Store a newly created resource in storage.
@@ -168,4 +194,5 @@ class MealController extends Controller
             $deleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
         );
     }
+
     }

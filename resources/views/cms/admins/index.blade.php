@@ -25,6 +25,7 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th>{{__('cms.name')}}</th>
+                                    <th>{{__('cms.permissions')}}</th>
                                     <th>{{__('cms.email')}}</th>
                                     <th>{{__('cms.mobile')}}</th>
                                     <th>{{__('cms.gender')}}</th>
@@ -38,6 +39,12 @@
                                 <tr>
                                     <td>{{$admin->id}}</td>
                                     <td>{{$admin->name}}</td>
+                                    <td>
+                                        <a href="{{route('admin.edit-permissions',$admin->id)}}"
+                                            class="btn btn-app bg-info">
+                                            <i class="fas fa-envelope"></i> {{$admin->permissions_count}}
+                                        </a>
+                                    </td>
                                     <td>{{$admin->email}}</td>
                                     <td>{{$admin->mobile}}</td>
                                     <td>{{$admin->gender}} </td>

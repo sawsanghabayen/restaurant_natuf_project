@@ -1,273 +1,519 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Restaurant</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/0866ae2c30.js" crossorigin="anonymous"></script>
 
+<!-- header section starts      -->
+@extends('front.parent')
+
+@section('title',__('front.home'))
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+
+@section('styles')
 <style>
-body {
-	font-family: 'Varela Round', sans-serif;
+
+small, .small {
+  font-size: 15px;
 }
-.form-control {
-	box-shadow: none;		
-	font-weight: normal;
-	font-size: 13px;
+.text-muted {
+  color: #6c757d !important;
 }
-.navbar {
-	background: #fff;
-	padding-left: 16px;
-	padding-right: 16px;
-	border-bottom: 1px solid #dfe3e8;
-	border-radius: 0;
+
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  font-size: 15px;  
 }
-.nav-link img {
-	border-radius: 50%;
-	width: 36px;
-	height: 36px;
-	margin: -8px 0;
-	float: left;
-	margin-right: 10px;
+.page-item:not(:first-child) .page-link {
+  margin-left: -1px;
 }
-.navbar .navbar-brand {
-	padding-left: 0;
-	font-size: 20px;
-	padding-right: 50px;
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #27ae60;
+  border-color: #27ae60;
 }
-.navbar .navbar-brand b {
-	color: #33cabb;		
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
 }
-.navbar .form-inline {
-	display: inline-block;
+
+.page-link {
+  padding: 8px 16px;;
 }
-.navbar a {
-	color: #888;
-	font-size: 15px;
+
+.page-item:first-child .page-link {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
 }
-.search-box {
-	position: relative;
-}	
-.search-box input {
-	padding-right: 35px;
-	border-color: #dfe3e8;
-	border-radius: 4px !important;
-	box-shadow: none
+.page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
-.search-box .input-group-text {
-	min-width: 35px;
-	border: none;
-	background: transparent;
-	position: absolute;
-	right: 0;
-	z-index: 9;
-	padding: 7px;
-	height: 100%;
+.page-link {
+  position: relative;
+  display: block;
+  color: rgba(8, 7, 7, 0.904);
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.search-box i {
-	color: #a0a5b1;
-	font-size: 19px;
+@media (prefers-reduced-motion: reduce) {
+  .page-link {
+    transition: none;
+  }
 }
-.navbar .sign-up-btn {
-	min-width: 110px;
-	max-height: 36px;
+.page-link:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: #27ae60;
+  border-color: #dee2e6;
 }
-.navbar .dropdown-menu {
-	color: #999;
-	font-weight: normal;
-	border-radius: 1px;
-	border-color: #e5e5e5;
-	box-shadow: 0 2px 8px rgba(0,0,0,.05);
+.page-link:focus {
+  z-index: 3;
+  color: #27ae60;
+  background-color: #27ae60;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
-.navbar a, .navbar a:active {
-	color: #888;
-	padding: 8px 20px;
-	background: transparent;
-	line-height: normal;
+
+.pagination-lg .page-link {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.25rem;
 }
-.navbar .navbar-form {
-	border: none;
+.pagination-lg .page-item:first-child .page-link {
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
 }
-.navbar .action-form {
-	width: 280px;
-	padding: 20px;
-	left: auto;
-	right: 0;
-	font-size: 14px;
+.pagination-lg .page-item:last-child .page-link {
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
 }
-.navbar .action-form a {		
-	color: #33cabb;
-	padding: 0 !important;
-	font-size: 14px;
+
+.pagination-sm .page-link {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
-.navbar .action-form .hint-text {
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 13px;
+.pagination-sm .page-item:first-child .page-link {
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
 }
-.navbar .btn-primary, .navbar .btn-primary:active {
-	color: #fff;
-	background: #33cabb !important;
-	border: none;
-}	
-.navbar .btn-primary:hover, .navbar .btn-primary:focus {		
-	color: #fff;
-	background: #31bfb1 !important;
+.pagination-sm .page-item:last-child .page-link {
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
 }
-.navbar .social-btn .btn, .navbar .social-btn .btn:hover {
-	color: #fff;
-	margin: 0;
-	padding: 0 !important;
-	font-size: 13px;
-	border: none;
-	transition: all 0.4s;
-	text-align: center;
-	line-height: 34px;
-	width: 47%;
-	text-decoration: none;
+/* Style the form - display items horizontally */
+/* .form-inline button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
 }
-.navbar .social-btn .facebook-btn {
-	background: #507cc0;
+
+.form-inline button:hover {
+  background-color: royalblue;
+} */
+
+/* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+/* @media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  } */
 }
-.navbar .social-btn .facebook-btn:hover {
-	background: #4676bd;
-}
-.navbar .social-btn .twitter-btn {
-	background: #64ccf1;
-}
-.navbar .social-btn .twitter-btn:hover {
-	background: #4ec7ef;
-}
-.navbar .social-btn .btn i {
-	margin-right: 5px;
-	font-size: 16px;
-	position: relative;
-	top: 2px;
-}
-.or-seperator {
-	margin-top: 32px;
-	text-align: center;
-	border-top: 1px solid #e0e0e0;
-}
-.or-seperator b {
-	color: #666;
-	padding: 0 8px;
-	width: 30px;
-	height: 30px;
-	font-size: 13px;
-	text-align: center;
-	line-height: 26px;
-	background: #fff;
-	display: inline-block;
-	border: 1px solid #e0e0e0;
-	border-radius: 50%;
-	position: relative;
-	top: -15px;
-	z-index: 1;
-}
-.navbar .action-buttons .dropdown-toggle::after {
-	display: none;
-}
-.form-check-label input {
-	position: relative;
-	top: 1px;
-}
-@media (min-width: 1200px){
-	.form-inline .input-group {
-		width: 300px;
-		margin-left: 30px;
-	}
-}
-@media (max-width: 768px){
-	.navbar .dropdown-menu.action-form {
-		width: 100%;
-		padding: 10px 15px;
-		background: transparent;
-		border: none;
-	}
-	.navbar .form-inline {
-		display: block;
-	}
-	.navbar .input-group {
-		width: 100%;
-	}
-}
+
+/* search */
+
 </style>
-<script>
-// Prevent dropdown menu from closing when click inside the form
-$(document).on("click", ".action-buttons .dropdown-menu", function(e){
-	e.stopPropagation();
-});
-</script>
-</head> 
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a href="#" class="navbar-brand"><b>
-		@if(auth()->user()!=null)
-		{{auth()->user()->first_name}}
-		@endif
-	</b>
-		
-	</a>  		
-	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<!-- Collection of nav links, forms, and other content for toggling -->
-	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-		<div class="navbar-nav">
-			<a href="#" class="nav-item nav-link">Home</a>
-			<a href="#" class="nav-item nav-link">About</a>			
-			<div class="nav-item dropdown">
-				<a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Services</a>
-				<div class="dropdown-menu">					
-					<a href="#" class="dropdown-item">Web Design</a>
-					<a href="#" class="dropdown-item">Web Development</a>
-					<a href="#" class="dropdown-item">Graphic Design</a>
-					<a href="#" class="dropdown-item">Digital Marketing</a>
+
+
+@endsection
+@section('content')
+
+<!-- home section ends -->
+
+<!-- dishes section starts  -->
+
+<section class="dishes" id="dishes">
+<!-- Load icon library -->
+
+<!-- The form -->
+<h3 class="sub-heading"> Our Meals </h3>
+<form class="example" action="{{route('resturants.index')}}" method="get">
+  <input type="text" placeholder="Search.." name="name">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+
+    {{-- <div class="card-body">
+    <div class="form-group">
+      <label>{{__('cms.category')}}</label>
+      <select class="form-control" id="category_id">
+          @foreach ($categories as $category)
+          <option value="{{$category->id}}">{{$category->name}}</option>
+          @endforeach
+      </select>
+    </div> --}} 
+    {{-- <form class="form-inline">
+      
+      <div class="form-group">
+      <label>{{__('cms.category')}}</label>
+      <select class="form-control" id="category_id">
+          @foreach ($allcategories as $category)
+          <option value="{{$category->id}}">{{$category->name}}</option>
+          @endforeach
+      </select>
+    </div>
+      <div class="form-group">
+      <label>{{__('cms.sub_category')}}</label>
+      <select class="form-control" id="sub_category_id">
+      </select>
+      </div>
+      <div class="form-group">
+        <label>{{__('cms.meals')}}</label>
+        <select class="form-control" id="meal_id">
+        </select>
+        </div>
+        <a href="#">
+        <i class="fas fa-search" id="search-icon"></i></a>
+        {{-- <input type="submit"  value="comment" class="btn"> --}}
+        {{-- <button type="submit">Submit</button> --}}
+      {{-- </form> --}} 
+    
+{{-- <form action="" class="">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control form-control-lg" placeholder="Search Here">
+        <button type="submit" class="input-group-text btn-success"><i class="bi bi-search me-2"></i> Search</button>
+    </div>
+</form>
+     --}}
+    <a href="{{route('restmeals.index')}}" class="btn">Show More...</a>
+    
+    <div class="box-container">
+      @foreach ($meals as $meal)
+      <div class="box">
+        {{-- <a href="#" onclick="performFavoriteStore({{$meal->id}})" id="meal_id"  class="fas fa-heart" ></a> --}}
+        <a href="{{Route('favorites.store',['meal_id'=>$meal->id])}}" 
+          
+          @if($meal->is_favorite)
+          style="background: var(--green);
+              color: #fff;
+              text-decoration: none;"
+          @endif  
+          class="fas fa-heart" ></a>
+
+        {{-- @if(count($favorites) > 0)
+          @foreach ($favorites as $favorite)
+          {{-- {{dd(Auth::guard('user')->user());}} --}}
+          {{-- @if (Auth::guard('user')->user() && Auth::guard('user')->user()->id == $favorite->user_id  && $meal->id== $favorite->meal_id )
+            <a href="#" onclick="performDelete('{{$meal->id}}')"   class="fas fa-heart"
+              style="background: var(--green);
+              color: #fff;
+              text-decoration: none;"
+            ></a>
+          @endif
+          @endforeach
+          @endif  --}}
+          <img  src="{{Storage::url($meal->image ?? '')}}" />
+
+            {{-- <img src="{{$meal->image}}" alt=""> --}}
+            {{-- <img src="{{asset('front/images/dish-4.png')}}" alt=""> --}}
+            <h3>{{$meal->title}}</h3>
+            <p>{{$meal->description}}</p>
+            <span>{{$meal->price}}</span>
+            {{-- <a href="#" class="btn">add to cart</a> --}}
+        </div>
+        
+        @endforeach
+        {{$meals->links()}}
+    </section>
+
+<!-- dishes section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <h3 class="sub-heading"> about us </h3>
+    <h1 class="heading"> why choose us? </h1>
+
+    <div class="row">
+
+        <div class="image">
+            <img src="{{asset('front/images/rest.jpg')}}" alt="">
+        </div>
+
+        <div class="content">
+            <h3>best food in the country</h3>
+            <p>{{$resturants[0]->description}}</p>
+            <div class="icons-container">
+                <div class="icons">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>free delivery</span>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>easy payments</span>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-headset"></i>
+                    <span>24/7 service</span>
                 </div>
             </div>
-			<a href="#" class="nav-item nav-link active">Pricing</a>
-			<a href="#" class="nav-item nav-link">Blog</a>
-			<a href="#" class="nav-item nav-link">Contact</a>
-		</div>
-		<form class="navbar-form form-inline">
-			<div class="input-group search-box">								
-				<input type="text" id="search" class="form-control" placeholder="Search here...">
-				<div class="input-group-append">
-					<span class="input-group-text">
-						<i class="material-icons">&#xE8B6;</i>
-					</span>
-				</div>
-			</div>
-		</form>
-		<div class="navbar-nav ml-auto action-buttons">
-			<div class="nav-item dropdown">
-				<a href="{{'cms/user/login'}}"  class="nav-link  mr-4">Login</a>
-				
-             
-               
-			</div>
-			<div class="nav-item dropdown">
-				<a class="nav-link"  href="{{route('cms.user.logout')}}" role="button">
-					<i class="fa-solid fa-right-from-bracket"></i>
-				  </a>
-             
-               
-			</div>
-
-			<div class="nav-item dropdown">
-				<a href="#" data-toggle="dropdown" class="btn btn-primary dropdown-toggle sign-up-btn">Sign up</a>
-               
-			</div>
+            <a href="#" class="btn">learn more</a>
         </div>
-	</div>
-</nav>
-</body>
-</html>
+
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<!-- menu section starts  -->
+
+<section class="dishes" id="dishes">
+
+    <h3 class="sub-heading"> Our Menu </h3>
+    
+    {{-- <a href="{{route('rest.categories')}}" class="btn">Show More...</a> --}}
+    
+    <div class="box-container">
+        @foreach ($categories as $category)
+        <div class="box">
+            {{-- <a href="#" class="fas fa-eye"></a> --}}
+            {{-- <img src="{{$meal->image}}" alt=""> --}}
+            <img  src="{{Storage::url($category->image ?? '')}}" />
+            <h3>{{$category->name}}</h3>
+            <p>{{$category->description}}</p>
+             <a href="{{route('restsubcategories.index',['id'=>$category->id])}}"  class="btn">Show more subCategories...</a>
+        </div>
+        
+        @endforeach
+        {{$categories->links()}}
+    </section>
+
+
+
+
+
+<!-- menu section ends -->
+
+<!-- review section starts  -->
+<section class="review" id="review">
+
+    <h3 class="sub-heading"> customer's review </h3>
+    <h1 class="heading"> what they say </h1>
+
+    <div class="swiper-container review-slider">
+
+        <div class="swiper-wrapper">
+          @foreach ($comments as $comment )
+            
+          
+            <div class="swiper-slide slide">
+                <i class="fas fa-quote-right"></i>
+                <div class="user">
+                    <img src="{{asset('front/images/avatar1.png')}}" alt="">
+                    <div class="user-info">
+                        <h3>{{$comment->first_name}} {{$comment->last_name}}</h3>
+                    </div>
+                </div>
+                <p>{{$comment->comment}}</p>
+            </div>
+            @endforeach
+
+          
+
+        </div>
+
+    </div>
+    
+</section>
+
+
+
+<section class="order" id="order">
+
+    <h3 class="sub-heading"> rate us  </h3>
+    <h1 class="heading"> your opinion matters  </h1>
+
+    <form id="review-form">
+
+        <div class="inputBox">
+            <div class="input">
+                <span>your first name</span>
+                <input type="text" placeholder="enter your name" id="first_name">
+            </div>
+            <div class="input">
+                <span>your last name</span>
+                <input type="text" placeholder="enter your name" id="last_name">
+            </div>
+            <div class="input">
+                <span>your comment</span>
+                <textarea id="comment" rows="4" cols="50"></textarea>
+            </div>
+        
+        </div>
+
+        <input type="submit" onclick="performStore()" value="comment" class="btn">
+
+    </form>
+
+</section>
+
+
+  <section class="order" id="order">
+
+    <h3 class="sub-heading"> contact us  </h3>
+    <h1 class="heading"> keep in touch  </h1>
+
+    <form id="review-form">
+
+        <div class="inputBox">
+            <div class="input">
+                <span>your name</span>
+                <input type="text" placeholder="enter your name" id="name">
+            </div>
+            <div class="input">
+                <span>mobile</span>
+                <input type="text" placeholder="enter your mobile" id="mobile">
+            </div>
+            <div class="input">
+              <span>subject</span>
+              <input type="text" placeholder="enter your subject" id="subject">
+          </div>
+            <div class="input">
+                <span>your message</span>
+                <textarea id="message" rows="4" cols="50"></textarea>
+            </div>
+        
+        </div>
+
+        <input type="submit" onclick="performStoreContact()" value="comment" class="btn">
+
+    </form>
+
+</section>
+</section>
+@endsection
+
+@section('scripts')
+
+  <!-- jQuery -->
+  <script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{asset('cms/dist/js/adminlte.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios@0.27.2/dist/axios.min.js"></script>
+<script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+
+
+<script>
+
+
+
+  function performDelete(id) {
+        
+        axios.delete('/rest/favorites/'+id)
+        .then(function (response) {
+            console.log(response);
+            toastr.success(response.data.message);
+            window.location.href = '/rest/home';
+        })
+        .catch(function (error) {
+            console.log(error.response);
+            toastr.error(error.response.data.message);
+        });
+    }
+    
+    // function performFavoriteStore(id) {
+    //     axios.post('/rest/favorites',{
+    //           meal_id:  id,
+    //     })
+    //     .then(function (response) {
+    //         console.log(response);
+    //         toastr.success(response.data.message);
+    //         window.location.href = '/rest/home';
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error.response);
+    //         toastr.error(error.response.data.message);
+    //     });
+    // }
+
+  
+      function performStore() {
+        axios.post('/rest/comments', {
+            first_name: document.getElementById('first_name').value,
+            last_name: document.getElementById('last_name').value,
+            comment: document.getElementById('comment').value,
+        })
+        .then(function (response) {
+            console.log(response);
+            toastr.success(response.data.message);
+            document.getElementById('review-form').reset();
+
+            window.location.href = '/rest/home';
+        })
+        .catch(function (error) {
+            console.log(error.response);
+            toastr.error(error.response.data.message);
+        });
+    }
+
+    function performStoreContact() {
+      axios.post('/rest/emails', {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            mobile: document.getElementById('mobile').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value,
+
+        })
+      .then(function (response) {
+            console.log(response);
+            toastr.success(response.data.message);
+            document.getElementById('contact-form').reset();
+            window.location.href = '/rest/home';
+
+        })
+        .catch(function (error) {
+            console.log(error.response);
+            toastr.error(error.response.data.message);
+        });
+
+    }
+ </script>
+
+
+@endsection
+
+
+<!-- order section ends -->
+
+<!-- footer section starts  -->
+
+<!-- footer section ends -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,8 +16,10 @@ class MealFactory extends Factory
      */
     public function definition()
     {
-        return [
-            //
-        ];
+        // return [
+        //     'title' => $this->faker->name,
+        //     'description' => $this->faker->city(),
+        //     'image' => $this->faker->boolean(50),
+        // ];
     }
 }

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Meal;
+use App\Models\Resturant;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Permission;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -18,10 +22,23 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+
+        $this->authorizeResource(Category::class, 'category'
+        , ['except' => [ 'index']]);
+    }
     public function index()
-     {
-         $categories = Category::withcount('subcategories')->get();
-         return response()->view('cms.categories.index', ['categories' => $categories]);
+    {
+        if (Auth::guard('admin')->check()){
+            $categories = Category::withcount('subcategories')->get();
+         return response()->view('cms.categories.index', ['categories' => $categories]);}
+         else{
+            $resturants=Resturant::all();
+            $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
+            $categories = Category::paginate(6,['*'],'categories');
+            return response()->view('front.categories', ['categories' => $categories ,'resturants'=>$resturants,'latestmeals'=>$latestmeals ]);
+         }
     }
 
     // public function showSubCategories(Request $request , Category $category)
@@ -38,6 +55,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+       
         return response()->view('cms.categories.create');
     }
 
@@ -49,6 +67,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->authorize('create' ,Permission::class);
         $validator = Validator($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'required|string|min:3',
@@ -86,11 +105,16 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $subcategories = Category::where('id',$category->id)->first()->subcategories;
-        // dd($subcategories);
-            return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
+        // if (Auth::guard('admin')){
+        // $subCategories =$category->subCategories;
+        //     return response()->json(['message'=>'success' , 'data' => $subCategories]);}
+        //     else{
+        //         $subCategories =$category->subCategories;
+        //             return response()->json(['message'=>'success' , 'data' => $subCategories]);
+        //     }
        
     }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -100,6 +124,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        // $this->authorize('update' ,$category);
         return response()->view('cms.categories.edit', ['category' => $category]);
     }
 
@@ -112,6 +137,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        // $this->authorize('update' ,$category);
         $validator = Validator($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'required|string|min:3',
@@ -148,6 +174,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+
         $deleted = $category->delete();
         if ($deleted) {
             Storage::delete($category->image);

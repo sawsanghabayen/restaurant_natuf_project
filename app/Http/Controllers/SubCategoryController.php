@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
+use App\Models\Meal;
+use App\Models\Resturant;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubCategoryController extends Controller
@@ -14,13 +17,34 @@ class SubCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function __construct()
     {
-        $subcategories = SubCategory::with('category')->get();
-        // $subcategories = SubCategory::all();
-        return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
+        $this->authorizeResource(SubCategory::class, 'subcategory'
+        , ['except' => [ 'index']]);
     }
 
+    public function index(Request $request)
+    {
+        if (Auth::guard('admin')->check()){
+        $subcategories = SubCategory::with('category')->withCount('meals')->get();
+        if($request->has('category_id')){
+            $subcategories =SubCategory::where('category_id','=',$request->input('category_id'))->get();
+        }
+        return response()->view('cms.subcategories.index', ['subcategories' => $subcategories]);
+    }
+    else{
+        $resturants=Resturant::all();
+        $subCategories = SubCategory::paginate();
+        $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
+
+       if($request->has('id')){
+           $subCategories =SubCategory::where('category_id','=',$request->input('id'))->paginate(6,['*'],'subCategories');
+       }
+       return response()->view('front.subcategories', ['subCategories' => $subCategories ,'resturants'=>$resturants,'latestmeals'=>$latestmeals]);
+    }
+    
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -1,188 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sawsan Resturant |@yield('title')</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-  <head>
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{{asset('front/css/style.css')}}">
+    <style>
+        .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+a:hover, .dropdown:hover .dropbtn {
+  background-color: #27ae60;
+  transition: all 0.5s;
 
-    <title>Restaurant Meals</title>
+}
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{asset('front/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-<!--
+li.dropdown {
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
 
-TemplateMo 546 Sixteen Clothing
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
 
-https://templatemo.com/tm-546-sixteen-clothing
+.dropdown-content a:hover {background-color: #f1f1f1;}
 
--->
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{{asset('front/assets/css/fontawesome.css')}}">
-    <link rel="stylesheet" href="{{asset('front/assets/css/templatemo-sixteen.css')}}">
-    <link rel="stylesheet" href="{{asset('front/assets/css/owl.css')}}">
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+    </style>
+    
     @yield('styles')
+</head>
+<body>
+    
+<!-- header section starts      -->
 
-  </head>
+<header>
+    <a href="#" class="logo"><i class="fas fa-utensils"></i>{{$resturants[0]->rest_name}}</a>
 
-  <body>
+    <nav class="navbar">
+        <a href="{{route('resturants.index')}}">home</a>
+        <a href="{{route('restmeals.index')}}">meals</a>
+        <a href="{{route('restcategories.index')}}">menu</a>
+        <a href="#about">about</a>
+        <a href="#order">review</a>
+        <a href="#order">contact us</a>
+    </nav>
  
+     
+    <nav class="navbar">
+        @if(Auth::guard('user')->check())
+        <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="dropbtn">{{Auth::guard('user')->user()->first_name}} {{Auth::guard('user')->user()->last_name}}</a></a>
+            <div class="dropdown-content">
+              <a href="{{route('users.edit',Auth::guard('user')->user()->id)}}" >
+                <i class="fa-solid fa-right-from-bracket"></i> Profile Info
+              </a> 
+             <a href="{{route('password.edit')}}" >
+                <i class="fa-solid fa-right-from-bracket"></i> Change Password
+              </a> 
+             <a href="{{route('cms.logout')}}" >
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+              </a> 
+            </div>
+          </li>
+        {{-- <a href="{{route('users.edit',Auth::guard('user')->user()->id)}}">{{Auth::guard('user')->user()->first_name}} {{Auth::guard('user')->user()->last_name}}</a> --}}
+        
+        <a href="{{route('favorites.index')}}" class="fas fa-heart"></a>
+        
 
-    <!-- ***** Preloader Start ***** 
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  -->
-    <!-- ***** Preloader End ***** -->
-
-
-    <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Restaurant <em>Meals</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">Our Meals</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        
+        @else
+        <a href="{{route('cms.login','user')}}">sign in</a>
+        <a href="{{route('cms.register')}}">sign up</a>
+        @endif
       </nav>
-    </header>
+      {{-- <div class="icons">
+        <i class="fas fa-search" id="search-icon"></i>
+     </div>  --}}
+</header>
 
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="banner header-text">
-      <div class="owl-banner owl-carousel">
-        <div class="banner-item-01">
-          <div class="text-content">
+
+<section class="home" id="home">
+
+    <div class="swiper-container home-slider">
+
+        <div class="swiper-wrapper wrapper">
+            @foreach ($latestmeals as $latestmeal )
+                
             
-            <h2>Best Meals</h2>
-          </div>
-        </div>
-        <div class="banner-item-02">
-          <div class="text-content">
-            <h4>Flash Deals</h4>
-            <h2>Get your best products</h2>
-          </div>
-        </div>
-        <div class="banner-item-03">
-          <div class="text-content">
-            <h4>Last Minute</h4>
-            <h2>Grab last minute deals</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    @yield('content')
-    <footer class="footer-48201">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4 pr-md-5">
-              <a href="#" class="footer-site-logo d-block mb-4">RESTAURANT MEALS</a>
-              <p style="font-size: 14px; 	color: gray;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi quasi perferendis ratione perspiciatis accusantium.</p>
+            <div class="swiper-slide slide">
+                <div class="content">
+                    <span>Latest Meals</span>
+                    {{-- <span>Latest Meals</span> --}}
+                    <h3>{{$latestmeal->title}}</h3>
+                    <p>{{$latestmeal->description}}</p>
+                    <a href="#" class="btn">order now</a>
+                </div>
+                <div class="image">
+                    <img style="width:300px;  border-radius: 50%;" src="{{Storage::url($meal->image ?? '')}}" alt="">
+                    {{-- <img src="{{$latestmeal->imge}}" alt=""> --}}
+                </div>
             </div>
-            <div class="col-md">
-              <ul class="list-unstyled nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                
-                <li><a href="products.html">Our Meals</a></li>
-               
-               
-              </ul>
-            </div>
-            <div class="col-md">
-              <ul class="list-unstyled nav-links">
-                <li><a href="#">Sign in</a></li>
-                <li><a href="#">Sign up</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                
-              </ul>
-            </div>
-            <div class="col-md">
-              <ul class="list-unstyled nav-links">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms &amp; Conditions</a></li>
-                <li><a href="#">Partners</a></li>
-              </ul>
-            </div>
-            <div class="col-md text-md-center">
-              <p class=""><a href="contact.html" class="btn btn-tertiary">Contact Us</a></p>
-            </div>
-          </div> 
-  
-          <div class="row ">
-            <div class="col-12 text-center">
-              <div class="copyright mt-5 pt-5">
-                <p><small>&copy; 2022-2023 All Rights Reserved.</small></p>
-              </div>
-            </div>
-          </div> 
+            
+            @endforeach
         </div>
         
-      </footer>
-  
-      <!-- loader part  -->
-    <div class="loader-container">
-      <img src="{{asset('front/assets/images/loader.gif')}}" alt="">
+        
+        {{-- <div  class="swiper-pagination"></div> --}}
+
     </div>
-  
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  
-  
-      <!-- Bootstrap core JavaScript -->
-      <script src="{{asset('front/vendor/jquery/jquery.min.js')}}"></script>
-      <script src="{{asset('front/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  
-  
-      <!-- Additional Scripts -->
-      <script src="{{asset('front/assets/js/custom.js')}}"></script>
-      <script src="{{asset('front/assets/js/owl.js')}}"></script>
-      <script src="{{asset('front/assets/js/slick.js')}}"></script>
-      <script src="{{asset('front/assets/js/isotope.js')}}"></script>
-      <script src="{{asset('front/assets/js/accordions.js')}}"></script>
-      <script src="{{asset('front/assets/js/script.js')}}"></script>
-      @yield('scripts')
-  
-  
-      <script language = "text/Javascript"> 
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t){                   //declaring the array outside of the
-        if(! cleared[t.id]){                      // function makes it static and global
-            cleared[t.id] = 1;  // you could use true and false, but that's more typing
-            t.value='';         // with more chance of typos
-            t.style.color='#fff';
-            }
-        }
-      </script>
-  
-  
-    </body>
-  
-  </html>
-  
+
+</section>
+
+<!-- home section ends -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- @endforeach --}}
+
+@yield('content')
+
+<section class="footer">
+
+    <div class="box-container">
+
+        <div class="box">
+            <h3>locations</h3>
+            <a href="#">india</a>
+            <a href="#">japan</a>
+            <a href="#">russia</a>
+            <a href="#">USA</a>
+            <a href="#">france</a>
+        </div>
+
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="#">home</a>
+            <a href="#">meals</a>
+            <a href="#">about</a>
+            <a href="#">menu</a>
+            <a href="#">reivew</a>
+            <a href="#">order</a>
+        </div>
+            <div class="box">
+            <h3>contact info</h3>
+            <a href="#">{{$resturants[0]->mobile}}</a>
+            <a href="#">{{$resturants[0]->telephone}}</a>
+            <a href="#">saw@gmail.com</a>
+            <a href="#">anasbhai@gmail.com</a>
+            <a href="#">{{$resturants[0]->address}}</a>
+        </div>
+
+        <div class="box">
+            <h3>follow us</h3>
+            <a href="#">facebook</a>
+            <a href="#">twitter</a>
+            <a href="#">instagram</a>
+            <a href="#">linkedin</a>
+        </div>
+
+    </div>
+
+    <div class="credit"> copyright @ 2022 by <span>{{$resturants[0]->rest_name}} </span> </div>
+
+</section>
+
+<!-- footer section ends -->
+
+<script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('cms/dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+
+
+<!-- custom js file link  -->
+<script src="{{asset('front/js/script.js')}}"></script>
+@yield('scripts')
+
+</body>
+</html>

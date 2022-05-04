@@ -32,11 +32,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="{{route('dashboards.index')}}" class="nav-link">Home</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+      
     </ul>
 
     <!-- Right navbar links -->
@@ -214,12 +212,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+
             <ul class="nav nav-treeview">
-            
+              @canany(['Create-Admin','Read-Users','Read-Admins'])
                 <li class="nav-header">{{__('cms.hr')}}</li>
+                @canany(['Create-Admin','Read-Admins'])
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="nav-icon far fa-envelope"></i>
+
                     <p>
                       {{__('cms.admins')}}
                       <i class="fas fa-angle-left right"></i>
@@ -243,9 +244,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                    
                   </ul>
                 </li>
-  
+                @endcanany
+                @can(['Read-Users'])
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon far fa-envelope"></i>
+                    <p>
+                      {{__('cms.users')}}
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" style="display: none;">
+                   
+                    <li class="nav-item">
+                      <a href="{{route('users.index')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>{{__('cms.index')}}</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                @endcan
+              @endcanany
+
+             @canany(['Create-Category','Create-SubCategory','Create-Meal','Read-Categories','Read-SubCategories','Read-Meals'])
 
               <li class="nav-header">{{__('cms.content_management')}}</li>
+              @canany(['Create-Category','Read-Categories'])
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon far fa-envelope"></i>
@@ -254,6 +279,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
+               
+
                 <ul class="nav nav-treeview" style="display: none;">
                   <li class="nav-item">
                     <a href="{{route('categories.index')}}" class="nav-link">
@@ -271,6 +298,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   
                 </ul>
               </li>
+              @endcanany
+              @canany(['Create-SubCategory','Read-SubCategories'])
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -297,6 +326,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   
                 </ul>
               </li>
+              @endcanany
+              @canany(['Create-Meal','Read-Meals'])
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -323,8 +354,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   
                 </ul>
               </li>
+              @endcanany
+              @endcanany
+              
 
               <li class="nav-header">{{__('cms.settings')}}</li>
+              <li class="nav-item">
+                <a href="{{route('password.edit')}}" class="nav-link">
+                  <i class="nav-icon far fa-circle text-danger"></i>
+                  <p class="text">{{__('cms.edit_password')}}</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link"  href="{{route('cms.logout')}}" role="button">
                   <i class="fa-solid fa-right-from-bracket"></i>
@@ -371,6 +411,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
 @yield('content')
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -392,7 +433,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2022 <a href="https://adminlte.io">Sawsan Restaurant</a>.</strong> All rights reserved.
   </footer>
 </div>
 <!-- ./wrapper -->
@@ -401,6 +442,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- jQuery -->
 <script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('cms/dist/js/demo.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->

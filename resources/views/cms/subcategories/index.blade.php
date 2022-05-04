@@ -29,6 +29,7 @@
                                     <th>{{__('cms.image')}}</th>
                                     <th>{{__('cms.title')}}</th>
                                     <th>{{__('cms.category')}}</th>
+                                    <th>{{__('cms.meals')}}</th>
                                     <th>{{__('cms.created_at')}}</th>
                                     <th>{{__('cms.updated_at')}}</th>
                                     <th style="width: 40px">{{__('cms.settings')}}</th>
@@ -42,9 +43,15 @@
                                         <img height="80" src="{{Storage::url($subcategory->image ?? '')}}" />
                                     </td>
                                     <td>{{$subcategory->title}}</td>
-                                    <td>{{$subcategory->category_name}}</td>
-                                    <td>{{$subcategory->created_at}}</td>
-                                    <td>{{$subcategory->updated_at}}</td>
+                                    <td><span class="badge bg-info">{{$subcategory->category->name}}</td>
+                                    <td>
+                                        <a href="{{route('meals.index',['sub_category_id'=>$subcategory->id])}}"
+                                            class="btn btn-app bg-info">
+                                            <i class="fas fa-envelope"></i> {{$subcategory->meals_count}}
+                                        </a>
+                                    </td>
+                                    <td>{{$subcategory->created_at->diffForHumans()}}</td>
+                                    <td>{{$subcategory->updated_at->diffForHumans()}}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{route('subCategories.edit',$subcategory->id)}}" class="btn btn-warning">

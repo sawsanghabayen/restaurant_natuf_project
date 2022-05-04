@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Resturant;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,17 @@ class ResturantSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Resturant::create([
+            'rest_name'=>'Sawsan Resturant',
+            'description'=>'Lorem, ipsum dolor sit amet consectetur adipisicing elit. ',
+            'mobile'=>'0597085978',
+            'telephone'=>'2470333',
+            'image'=>'cms/dist/img/resturant',
+            'address'=>'Gaza_Mashroo3BeitLahia',
+      
+
+        ]
+            
+        );
     }
 }
