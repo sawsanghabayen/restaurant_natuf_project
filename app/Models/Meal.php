@@ -26,6 +26,7 @@ class Meal extends Model
         return $this->hasMany(Favorite::class, 'meal_id', 'id');
     }
 
+
     public function getIsFavoriteAttribute()
     {
         if (auth('user')->check()) {
@@ -35,8 +36,5 @@ class Meal extends Model
         return false;
 
     }
-
-
-
 
 }

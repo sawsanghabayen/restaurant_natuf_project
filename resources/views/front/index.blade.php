@@ -6,6 +6,8 @@
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
 
 @section('styles')
+<link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
+
 <style>
 
 small, .small {
@@ -124,7 +126,7 @@ small, .small {
     flex-direction: column;
     align-items: stretch;
   } */
-}
+/* } */
 
 /* search */
 
@@ -149,82 +151,32 @@ small, .small {
 </form>
 
 
-    {{-- <div class="card-body">
-    <div class="form-group">
-      <label>{{__('cms.category')}}</label>
-      <select class="form-control" id="category_id">
-          @foreach ($categories as $category)
-          <option value="{{$category->id}}">{{$category->name}}</option>
-          @endforeach
-      </select>
-    </div> --}} 
-    {{-- <form class="form-inline">
-      
-      <div class="form-group">
-      <label>{{__('cms.category')}}</label>
-      <select class="form-control" id="category_id">
-          @foreach ($allcategories as $category)
-          <option value="{{$category->id}}">{{$category->name}}</option>
-          @endforeach
-      </select>
-    </div>
-      <div class="form-group">
-      <label>{{__('cms.sub_category')}}</label>
-      <select class="form-control" id="sub_category_id">
-      </select>
-      </div>
-      <div class="form-group">
-        <label>{{__('cms.meals')}}</label>
-        <select class="form-control" id="meal_id">
-        </select>
-        </div>
-        <a href="#">
-        <i class="fas fa-search" id="search-icon"></i></a>
-        {{-- <input type="submit"  value="comment" class="btn"> --}}
-        {{-- <button type="submit">Submit</button> --}}
-      {{-- </form> --}} 
-    
-{{-- <form action="" class="">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control form-control-lg" placeholder="Search Here">
-        <button type="submit" class="input-group-text btn-success"><i class="bi bi-search me-2"></i> Search</button>
-    </div>
-</form>
-     --}}
     <a href="{{route('restmeals.index')}}" class="btn">Show More...</a>
     
     <div class="box-container">
       @foreach ($meals as $meal)
       <div class="box">
-        {{-- <a href="#" onclick="performFavoriteStore({{$meal->id}})" id="meal_id"  class="fas fa-heart" ></a> --}}
-        <a href="{{Route('favorites.store',['meal_id'=>$meal->id])}}" 
-          
+        @if(Auth::guard('user')->check())
+        <a href="#" onclick="performFavoriteStore({{$meal->id}})"   class="fas fa-heart" 
           @if($meal->is_favorite)
           style="background: var(--green);
               color: #fff;
               text-decoration: none;"
           @endif  
-          class="fas fa-heart" ></a>
+         >
+        </a>
+        @else
+        <a href="{{route('cms.login','user')}}"    class="fas fa-heart" ></a>
+        @endif
 
-        {{-- @if(count($favorites) > 0)
-          @foreach ($favorites as $favorite)
-          {{-- {{dd(Auth::guard('user')->user());}} --}}
-          {{-- @if (Auth::guard('user')->user() && Auth::guard('user')->user()->id == $favorite->user_id  && $meal->id== $favorite->meal_id )
-            <a href="#" onclick="performDelete('{{$meal->id}}')"   class="fas fa-heart"
-              style="background: var(--green);
-              color: #fff;
-              text-decoration: none;"
-            ></a>
-          @endif
-          @endforeach
-          @endif  --}}
+
           <img  src="{{Storage::url($meal->image ?? '')}}" />
 
             {{-- <img src="{{$meal->image}}" alt=""> --}}
             {{-- <img src="{{asset('front/images/dish-4.png')}}" alt=""> --}}
             <h3>{{$meal->title}}</h3>
             <p>{{$meal->description}}</p>
-            <span>{{$meal->price}}</span>
+            <span>{{$meal->price}} $</span>
             {{-- <a href="#" class="btn">add to cart</a> --}}
         </div>
         
@@ -249,7 +201,7 @@ small, .small {
 
         <div class="content">
             <h3>best food in the country</h3>
-            <p>{{$resturants[0]->description}}</p>
+            {{-- <p>{{$resturants->description}}</p> --}}
             <div class="icons-container">
                 <div class="icons">
                     <i class="fas fa-shipping-fast"></i>
@@ -365,18 +317,22 @@ small, .small {
 
 </section>
 
-
+{{-- Contact Us --}}
   <section class="order" id="order">
 
     <h3 class="sub-heading"> contact us  </h3>
     <h1 class="heading"> keep in touch  </h1>
 
-    <form id="review-form">
+    <form id="contact-form">
 
         <div class="inputBox">
             <div class="input">
                 <span>your name</span>
                 <input type="text" placeholder="enter your name" id="name">
+            </div>
+            <div class="input">
+                <span>your email</span>
+                <input type="email" placeholder="enter your email" id="email">
             </div>
             <div class="input">
                 <span>mobile</span>
@@ -393,7 +349,7 @@ small, .small {
         
         </div>
 
-        <input type="submit" onclick="performStoreContact()" value="comment" class="btn">
+        <input type="submit" onclick="performStoreContact()" value="contact" class="btn">
 
     </form>
 
@@ -424,7 +380,7 @@ small, .small {
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
-            window.location.href = '/rest/home';
+            window.location.href = '/rest/index';
         })
         .catch(function (error) {
             console.log(error.response);
@@ -432,20 +388,20 @@ small, .small {
         });
     }
     
-    // function performFavoriteStore(id) {
-    //     axios.post('/rest/favorites',{
-    //           meal_id:  id,
-    //     })
-    //     .then(function (response) {
-    //         console.log(response);
-    //         toastr.success(response.data.message);
-    //         window.location.href = '/rest/home';
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error.response);
-    //         toastr.error(error.response.data.message);
-    //     });
-    // }
+    function performFavoriteStore(id) {
+        axios.post('/rest/favorites',{
+              meal_id:  id,
+        })
+        .then(function (response) {
+            console.log(response);
+            toastr.success(response.data.message);
+            // window.location.href = '/rest/index';
+        })
+        .catch(function (error) {
+            console.log(error.response);
+            toastr.error(error.response.data.message);
+        });
+    }
 
   
       function performStore() {
@@ -459,7 +415,7 @@ small, .small {
             toastr.success(response.data.message);
             document.getElementById('review-form').reset();
 
-            window.location.href = '/rest/home';
+            window.location.href = '/rest/index';
         })
         .catch(function (error) {
             console.log(error.response);
@@ -468,7 +424,7 @@ small, .small {
     }
 
     function performStoreContact() {
-      axios.post('/rest/emails', {
+      axios.post('/rest/contacts', {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
             mobile: document.getElementById('mobile').value,
@@ -480,7 +436,7 @@ small, .small {
             console.log(response);
             toastr.success(response.data.message);
             document.getElementById('contact-form').reset();
-            window.location.href = '/rest/home';
+            // window.location.href = '/rest/home';
 
         })
         .catch(function (error) {

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactEmail;
 use App\Mail\ContactMail;
+use App\Models\Admin;
 use App\Models\Contact;
+use App\Notifications\NewMessageNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +18,13 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $this->authorize('viewAny' ,Contact::class);
+        $notifications=$request->user()->notifications;
+        $notifications->markAsRead();
+        $contacts=Contact::all();
+        return response()->view('cms.contact.index',['contacts'=>$contacts]);
     }
 
     /**
@@ -36,9 +43,8 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
-        // dd($request);
         $validator = Validator($request->all(), [
             'name' => 'required|string|min:3',
             'email' => 'required|email',
@@ -58,41 +64,25 @@ class ContactController extends Controller
 
             $isSaved = $contact->save();
             if ($isSaved)
-                // Mail::to('saw@gmail.com')->send(new ContactMail($contact));
+                Mail::to('saw@gmail.com')->send(new ContactEmail($contact));
+                $admins=Admin::all();
+                foreach ($admins as $admin) {
+                    $admin->notify(new NewMessageNotification($contact));
+                }
+                // dd($admin);
+
                  return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
                 $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST
             );
-         }else {
+        }else {
             return response()->json(
                 ['message' => $validator->getMessageBag()->first()],
                 Response::HTTP_BAD_REQUEST,
             );
         }
     }
-    //     // dd($request);
-    //     $request->validate([
-    //         'name' => 'required|string|min:3',
-    //         'email' => 'required|email',
-    //         'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-    //         'subject' => 'required|string|min:3',
-    //         'message' => 'required|string|min:3',
-    //       ]);
-  
-    //       $data = [
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'mobile'=>$request->mobile,
-    //         'subject' => $request->subject,
-    //         'message' => $request->message,
-    //       ];
-  
-    //       Mail::to('saw@gmail.com')->send(new ContactMail($data));
-    //        session()->flash('message', 'Thank you for your contact');
-         
-      
-    //       return redirect()->route('rest.home');
-    //   }
+    
   
 
     /**
@@ -103,7 +93,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        // $contacts=Contact::
     }
 
     /**
@@ -137,6 +127,16 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        $this->authorize('delete' ,$contact);
+        $deleted = $contact->delete();
+        return response()->json(
+            [
+                'title' => $deleted ? 'Deleted!' : 'Delete Failed!',
+                'text' => $deleted ? 'User deleted successfully' : 'User deleting failed!',
+                'icon' => $deleted ? 'success' : 'error'
+            ],
+            $deleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
-}
+    }
+

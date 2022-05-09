@@ -1,3 +1,17 @@
+var swiper = new Swiper(".home-slider", {
+  spaceBetween: 30,
+  centeredSlides: true,
+  autoplay: {
+    delay: 7500,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  loop: true,
+});
+
 var swiper = new Swiper(".review-slider", {
   spaceBetween: 20,
   centeredSlides: true,
@@ -22,21 +36,8 @@ var swiper = new Swiper(".review-slider", {
   },
 });
 
-var swiper = new Swiper(".home-slider", {
-  spaceBetween: 30,
-  centeredSlides: true,
-  autoplay: {
-    delay: 7500,
-    disableOnInteraction: false,
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-  loop:true,
-});
-let menu = document.querySelector('#menu-bars');
-let navbar = document.querySelector('.navbar');
+// let menu = document.querySelector('#menu-bars');
+// let navbar = document.querySelector('.navbar');
 
 // menu.onclick = () => {
 //   menu.classList.toggle('fa-times');
@@ -69,35 +70,22 @@ let navLinks = document.querySelectorAll('header .navbar a');
 
 // }
 
-// document.querySelector('#search-icon').onclick = () => {
-//   document.querySelector('#search-form').classList.toggle('active');
-// }
+document.querySelector('#search-icon').onclick = () => {
+  document.querySelector('#search-form').classList.toggle('active');
+}
 
-// document.querySelector('#close').onclick = () => {
-//   document.querySelector('#search-form').classList.remove('active');
-// }
-
-// var swiper = new Swiper(".home-slider", {
-//   spaceBetween: 30,
-//   centeredSlides: true,
-//   autoplay: {
-//     delay: 7500,
-//     disableOnInteraction: false,
-//   },
-//   pagination: {
-//     el: ".swiper-pagination",
-//     clickable: true,
-//   },
-//   loop: true,
-// });
+document.querySelector('#close').onclick = () => {
+  document.querySelector('#search-form').classList.remove('active');
+}
 
 
-// function loader() {
-//   document.querySelector('.loader-container').classList.add('fade-out');
-// }
 
-// function fadeOut() {
-//   setInterval(loader, 3000);
-// }
+function loader() {
+  document.querySelector('.loader-container').classList.add('fade-out');
+}
 
-// window.onload = fadeOut;
+function fadeOut() {
+  setInterval(loader, 3000);
+}
+
+window.onload = fadeOut;

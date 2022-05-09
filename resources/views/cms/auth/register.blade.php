@@ -37,6 +37,9 @@
                             <input type="text" class="form-input"  id="last_name" placeholder="Last Name"/>
                         </div>
                         <div class="form-group">
+                            <input type="text" class="form-input"  id="address" placeholder="Address"/>
+                        </div>
+                        <div class="form-group">
                             <input type="email" class="form-input" id="email" placeholder="Your Email"/>
                         </div>
                         <div class="form-group">
@@ -70,6 +73,7 @@
                 first_name: document.getElementById('first_name').value,
                 last_name: document.getElementById('last_name').value,
                 email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
                 password: document.getElementById('password').value,
                 mobile: document.getElementById('mobile').value,
             })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\favorite;
 use App\Models\Meal;
 use App\Models\Resturant;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
     //   $admins=Favorite::all();
+    $contacts=Contact::all();
       $users_count=User::count();
       $admins_count=Admin::count();
     //   $categories=Category::all();
@@ -40,7 +42,7 @@ class DashboardController extends Controller
     //    dd($users);
 
          
-      return response()->view('cms.index',['favorites'=>$favorites ,'meals'=>$meals,'mealsname'=>$mealsname,'userfavmeal_count'=>$userfavmeal_count ,'users_count'=>$users_count,'admins_count'=>$admins_count]);
+      return response()->view('cms.index',['contacts'=>$contacts,'favorites'=>$favorites ,'meals'=>$meals,'mealsname'=>$mealsname,'userfavmeal_count'=>$userfavmeal_count ,'users_count'=>$users_count,'admins_count'=>$admins_count]);
         
     }
 

@@ -3,7 +3,7 @@
 @section('title',__('cms.meals'))
 @section('page_lg',__('cms.meals'))
 @section('main_page_md')
-<a href="#">Home</a>
+<a href="{{route('dashboards.index')}}">Home</a>
 @endsection
 @section('page_sm',__('cms.meals'))
 
@@ -46,7 +46,7 @@
                                     </td>
                                     <td>{{$meal->title}}</td>
                                     <td>{{$meal->description}}</td>
-                                    <td><span class="badge bg-info">{{$meal->subcategory->title}}</td>
+                                    <td><span class="badge bg-info">{{$meal->subcategory->title}}</span></td>
                                     <td>{{$meal->price}}</td>
                                     <td><span
                                         class="badge @if($meal->active) bg-success @else bg-danger @endif">{{$meal->active_status}}</span>

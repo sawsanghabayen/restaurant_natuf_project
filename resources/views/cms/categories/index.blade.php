@@ -3,7 +3,7 @@
 @section('title',__('cms.categories'))
 @section('page_lg',__('cms.categories'))
 @section('main_page_md')
-<a href="#">Home</a>
+<a href="{{route('dashboards.index')}}">Home</a>
 @endsection
 @section('page_sm',__('cms.categories'))
 

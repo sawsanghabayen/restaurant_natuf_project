@@ -16,6 +16,7 @@ class FavoriteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Request $request)
     {
         $favorites=$request->user()->meals;
@@ -43,17 +44,13 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
-    //    dd($request);
-        // $validator = Validator( ['meal_id' =>'required|numeric|exists:meals,id']);
-        
+  
         $validator = Validator($request->all(), [
             'meal_id' =>'required|numeric|exists:meals,id'
 
         ]);
 
         if (!$validator->fails()) {
-            
-
             $meal = Meal::find($request->meal_id);
             if (!is_null($meal)) {
                 if (!$request->user()->favorites()->where('meal_id', $meal->id)->exists()) {

@@ -1,10 +1,10 @@
 @extends('cms.parent')
-
 @section('title',__('cms.users'))
-@section('page-lg',__('cms.index'))
-@section('main-pg-md',__('cms.users'))
-@section('page-md',__('cms.index'))
-
+@section('page_lg',__('cms.users'))
+@section('main_page_md')
+<a href="{{route('dashboards.index')}}">Home</a>
+@endsection
+@section('page_sm',__('cms.users'))
 @section('styles')
 
 @endsection

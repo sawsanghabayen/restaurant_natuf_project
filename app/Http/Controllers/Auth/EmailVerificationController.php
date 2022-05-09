@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class EmailVerificationController extends Controller
@@ -12,6 +13,7 @@ class EmailVerificationController extends Controller
     //
     public function notice()
     {
+        
         return response()->view('cms.auth.verify-email');
     }
 
@@ -27,7 +29,11 @@ class EmailVerificationController extends Controller
 
     public function verify(EmailVerificationRequest $emailVerificationRequest)
     {
+        // dd(Auth::guard('admin')->check());
         $emailVerificationRequest->fulfill();
-        return redirect()->route('cms.dashboard');
+        if(Auth::guard('admin')->check()) 
+        return redirect()->route('dashboards.index');
+        else
+         return redirect()->route('resturants.index');
     }
 }

@@ -119,7 +119,7 @@
 			@if ($guard =='admin')
                window.location.href = '/cms/admin/dashboards';
             @else
-               window.location.href = '/rest/resturants';
+               window.location.href = '/rest/index';
             @endif
 
 		})

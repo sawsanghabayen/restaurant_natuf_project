@@ -105,13 +105,13 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        // if (Auth::guard('admin')){
-        // $subCategories =$category->subCategories;
-        //     return response()->json(['message'=>'success' , 'data' => $subCategories]);}
-        //     else{
-        //         $subCategories =$category->subCategories;
-        //             return response()->json(['message'=>'success' , 'data' => $subCategories]);
-        //     }
+        if (Auth::guard('admin')){
+        $subCategories =$category->subCategories;
+            return response()->json(['message'=>'success' , 'data' => $subCategories]);}
+            else{
+                $subCategories =$category->subCategories;
+                    return response()->json(['message'=>'success' , 'data' => $subCategories]);
+            }
        
     }
    

@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\Admin;
-use App\Models\Resturant;
 use App\Models\Meal;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -19,19 +18,19 @@ class MealPolicy
      */
     public function viewAny($user)
     {
-        return $user->hasPermissionTo('Read-Meals')
-        ? $this->allow()
-        : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
+        // return $user->hasPermissionTo('Read-Categories')
+        //     ? $this->allow()
+        //     : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Meal  $Meal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(Admin $admin, Meal $meal)
+    public function view($user, Meal $Meal)
     {
         //
     }
@@ -42,9 +41,9 @@ class MealPolicy
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(Resturant $resturant)
+    public function create(Admin $admin)
     {
-        return $resturant->hasPermissionTo('Create-Meal')
+        return $admin->hasPermissionTo('Create-Meal')
         ? $this->allow()
         : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
@@ -53,40 +52,38 @@ class MealPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Meal  $Meal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Resturant $resturant , Meal $meal)
+    public function update(Admin $admin, Meal $Meal)
     {
-        return auth('resturant')->check()  && $resturant->hasPermissionTo('Update-Meal') && $resturant->id == $meal->resturant_id
-         ? $this->allow()
-         : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
+        return $admin->hasPermissionTo('Update-Meal')
+        ? $this->allow()
+        : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Meal  $Meal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete($user , Meal $meal)
+    public function delete(Admin $admin, Meal $Meal)
     {
-        return  ($user->hasPermissionTo('Delete-Meal')) && (auth('admin')->check() || $user->id == $meal->resturant_id ) 
-        
-      
-        ? $this->allow()
-        : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
+        return $admin->hasPermissionTo('Delete-Meal')
+            ? $this->allow()
+            : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Meal  $Meal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(Admin $admin, Meal $meal)
+    public function restore(Admin $admin, Meal $Meal)
     {
         //
     }
@@ -95,10 +92,10 @@ class MealPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Meal  $Meal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(Admin $admin, Meal $meal)
+    public function forceDelete(Admin $admin, Meal $Meal)
     {
         //
     }

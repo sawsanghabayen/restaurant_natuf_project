@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\Admin;
-use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class SubCategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -27,12 +27,12 @@ class CategoryPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\SubCategory  $SubCategory
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(Admin $admin, Category $category)
+    public function view(Admin $admin, SubCategory $SubCategory)
     {
-        return $admin->hasPermissionTo('Show-Category')
+        return $admin->hasPermissionTo('Show-SubCategory')
         ? $this->allow()
         : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
@@ -45,7 +45,7 @@ class CategoryPolicy
      */
     public function create(Admin $admin)
     {
-        return $admin->hasPermissionTo('Create-Category')
+        return $admin->hasPermissionTo('Create-SubCategory')
         ? $this->allow()
         : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
@@ -54,12 +54,12 @@ class CategoryPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\SubCategory  $SubCategory
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Admin $admin, Category $category)
+    public function update(Admin $admin, SubCategory $SubCategory)
     {
-        return $admin->hasPermissionTo('Update-Category')
+        return $admin->hasPermissionTo('Update-SubCategory')
         ? $this->allow()
         : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
@@ -68,12 +68,12 @@ class CategoryPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\SubCategory  $SubCategory
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(Admin $admin, Category $category)
+    public function delete(Admin $admin, SubCategory $SubCategory)
     {
-        return $admin->hasPermissionTo('Delete-Category')
+        return $admin->hasPermissionTo('Delete-SubCategory')
             ? $this->allow()
             : $this->deny('YOU HAVE NO PERMISSION FOR THIS ACTION');
     }
@@ -82,10 +82,10 @@ class CategoryPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\SubCategory  $SubCategory
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(Admin $admin, Category $category)
+    public function restore(Admin $admin, SubCategory $SubCategory)
     {
         //
     }
@@ -94,10 +94,10 @@ class CategoryPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\Admin  $admin
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\SubCategory  $SubCategory
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(Admin $admin, Category $category)
+    public function forceDelete(Admin $admin, SubCategory $SubCategory)
     {
         //
     }

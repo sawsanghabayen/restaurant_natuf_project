@@ -64,6 +64,9 @@ return [
     'mobile'=>'Mobile',
     'female'=>'Female',
     'male'=>'Male',
+    'contacts'=>'Contacts',
+    'subject'=>'Subject',
+    'dashboard'=>'Dashboard',
 
     
     

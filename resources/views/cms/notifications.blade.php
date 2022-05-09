@@ -1,11 +1,11 @@
 @extends('cms.parent')
-@section('title',__('cms.admins'))
-@section('page_lg',__('cms.admins'))
+
+@section('title',__('cms.notifications'))
+@section('page_lg',__('cms.notifications'))
 @section('main_page_md')
 <a href="{{route('dashboards.index')}}">Home</a>
 @endsection
-@section('page_sm',__('cms.admins'))
-
+@section('page_sm',__('cms.notifications'))
 @section('styles')
 
 @endsection
@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{__('cms.admins')}}</h3>
+                        <h3 class="card-title">{{__('cms.notifications')}}</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -25,41 +25,27 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>{{__('cms.name')}}</th>
-                                    <th>{{__('cms.permissions')}}</th>
-                                    <th>{{__('cms.email')}}</th>
-                                    <th>{{__('cms.mobile')}}</th>
-                                    <th>{{__('cms.gender')}}</th>
+                                    <th>{{__('cms.from')}}</th>
+                                    <th>{{__('cms.subject')}}</th>
+                                    <th>{{__('cms.message')}}</th>
                                     <th>{{__('cms.created_at')}}</th>
-                                    <th>{{__('cms.updated_at')}}</th>
+                                    <th>{{__('cms.read_at')}}</th>
                                     <th style="width: 40px">{{__('cms.settings')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($admins as $admin)
+                             
+                                @foreach ($notifications as $notification)
                                 <tr>
-                                    <td>{{$admin->id}}</td>
-                                    <td>{{$admin->name}}</td>
-                                    <td>
-                                        <a href="{{route('admin.edit-permissions',$admin->id)}}"
-                                            class="btn btn-app bg-info">
-                                            <i class="fas fa-envelope"></i> {{$admin->permissions_count}}
-                                        </a>
-                                    </td>
-                                    <td>{{$admin->email}}</td>
-                                    <td>{{$admin->mobile}}</td>
-                                    <td>{{$admin->gender}} </td>
-                                    <td>{{$admin->created_at}}</td>
-                                    <td>{{$admin->updated_at}}</td>
+                                    <td>{{$loop->index+1}}</td>
+                                    <td>{{$notification->data['name']}}</td>
+                                    <td>{{$notification->data['subject']}}</td>
+                                    <td>{{$notification->data['message']}}</td>
+                                    <td>{{$notification->created_at->diffForHumans()}} </td>
+                                    <td>{{$notification->read_at->diffForHumans()}} </td>
                                     <td>
                                         <div class="btn-group">
-                                           
-                                            <a href="{{route('admins.edit', $admin->id )}}" class="btn btn-warning">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                          
-                                            
-                                            <a href="#" onclick="confirmDelete('{{$admin->id}}', this)"
+                                            <a href="#" onclick="confirmDelete('{{$notification->id}}', this)"
                                                 class="btn btn-danger">
                                                 <i class="fas fa-trash"></i>
                                             </a>
@@ -104,7 +90,7 @@
     }
 
     function performDelete(id, reference) {
-        axios.delete('/cms/admin/admins/'+id)
+        axios.delete('/cms/admin/notifications/'+id)
         .then(function (response) {
             console.log(response);
             // toastr.success(response.data.message);

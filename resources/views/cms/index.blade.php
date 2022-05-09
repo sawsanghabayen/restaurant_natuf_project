@@ -1,71 +1,101 @@
 @extends('cms.parent')
-@section('title',__('cms.index'))
-@section('page_lg','Dashboard')
-@section('main_page_md',__('cms.index'))
-@section('page_sm','Dashboard')
+@section('title',__('cms.dashboard'))
+@section('page_lg',__('cms.dashboard'))
+@section('main_page_md')
+<a href="{{route('dashboards.index')}}">Home</a>
+@endsection
+@section('page_sm',__('cms.dashboard'))
 @section('styles')
-    
+
+     <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endsection
 @section('content')
-
-
-
-  <div class="row">
-
-    
-    <div class="col-12 col-sm-6 col-md-3">
-      <div class="info-box mb-3">
-      <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-      <div class="info-box-content">
-      <span class="info-box-text">Number Admins</span>
-      <span class="info-box-number">{{$admins_count}}</span>
-      </div>
-      
-      </div>
-      
-      </div>
-    
-    <div class="col-12 col-sm-6 col-md-3">
-    <div class="info-box mb-3">
-    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-    <div class="info-box-content">
-    <span class="info-box-text">Number Users</span>
-    <span class="info-box-number">{{$users_count}}</span>
-    </div>
-    
-    </div>
-    
-    </div>
-    
-    </div>
-
+ <!-- Main content -->
+ <section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
     <div class="row">
-    @foreach($favorites as $favorite)
-    <div   class="col-12 col-sm-6 ">
-      <div style="width: 70%;" class="info-box mb-3">
-      <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-      <div class="info-box-content">
-      <span class="info-box-text"># Of Users Favorite {{$favorite->meal->title}}</span>
-      <span class="info-box-number">{{$favorite->user_count}}</span>
-      </div>
-      </div>
-      </div>
-      @endforeach
-      @foreach($meals as $meal)
-      @if(!$meal->is_favorite)
-      <div   class="col-12 col-sm-6 ">
-        <div style="width: 70%;" class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-        <div class="info-box-content">
-        <span class="info-box-text"># Of Users Favorite {{$meal->title}}</span>
-        <span class="info-box-number">{{0}}</span>
-        </div>
-        </div>
-        </div>
-        @endif
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>150</h3>
 
-      @endforeach
-    </div>
+            <p>New Orders</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{$admins_count}}</h3>
+
+            <p>Admins Count</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="{{route('admins.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>{{$users_count}}</h3>
+
+            <p>User Registrations</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="{{route('users.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+      {{-- <div class="row">
+        @foreach($favorites as $favorite)
+        <div   class="col-12 col-sm-6 ">
+          <div style="width: 70%;" class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+          <div class="info-box-content">
+          <span class="info-box-text"># Of Users Favorite {{$favorite->meal->title}}</span>
+          <span class="info-box-number">{{$favorite->user_count}}</span>
+          </div>
+          </div>
+          </div>
+          @endforeach
+          @foreach($meals as $meal)
+          @if(!$meal->is_favorite)
+          <div   class="col-12 col-sm-6 ">
+            <div style="width: 70%;" class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+            <div class="info-box-content">
+            <span class="info-box-text"># Of Users Favorite {{$meal->title}}</span>
+            <span class="info-box-number">{{0}}</span>
+            </div>
+            </div>
+            </div>
+            @endif
+    
+          @endforeach
+        </div>  --}}
+</section>
+     
+     
+    <!-- /.row -->
+    <!-- Main row -->
+
+
+ 
     
     
       {{-- <section class="content">
@@ -178,7 +208,7 @@
     </section>
     <!-- /.content -->
     {{--  --}}
-  </div> 
+ 
 
 
 @endsection
