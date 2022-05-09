@@ -64,8 +64,9 @@ class NotificationController extends Controller
      */
     public function show( $id )
     {
-        $notifications=auth()->user()->notifications->where('id' ,$id)->first();
-        dd($notifications);
+        // dd($id);
+        $notifications=auth()->user()->notifications()->where('id' ,$id)->get();
+        // dd($notifications);
         // $notifications=$request->user()->notifications()->get();
         $notifications->markAsRead();
         return response()->view('cms.notifications',['notifications'=>$notifications]);
@@ -95,7 +96,7 @@ class NotificationController extends Controller
     public function destroy($id)
     {
         // $notifications=request()->user()->notifications();
-        // $this->authorize('delete');
+        $this->authorize('delete');
         $deleted = request()->user()->notifications()->where('id', '=', $id)->delete();
         return response()->json(
             [
