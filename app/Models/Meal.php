@@ -17,6 +17,16 @@ class Meal extends Model
     {
         return $this->active ? 'Active' : 'Disabled';
     }
+    public function ordermeals()
+    {
+        return $this->hasMany(OrderMeal::class, 'meal_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, OrderMeal::class,'meal_id','order_id');
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, Favorite::class, 'meal_id', 'user_id');
@@ -25,7 +35,14 @@ class Meal extends Model
     {
         return $this->hasMany(Favorite::class, 'meal_id', 'id');
     }
-
+    public function userscart()
+    {
+        return $this->belongsToMany(User::class, Cart::class, 'meal_id', 'user_id');
+    }
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'meal_id', 'id');
+    }
 
     public function getIsFavoriteAttribute()
     {

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\favorite;
 use App\Models\Meal;
+use App\Models\Order;
 use App\Models\Resturant;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -26,23 +27,24 @@ class DashboardController extends Controller
     //   $admins=Favorite::all();
     $contacts=Contact::all();
       $users_count=User::count();
+      $orders_count=Order::count();
       $admins_count=Admin::count();
     //   $categories=Category::all();
     //   $subcategories=SubCategory::all();
       $meals=Meal::all();
-      $favorites=Favorite::withcount('user')->get();
-      $mealsname="[";
-      $userfavmeal_count="[";
-      foreach($favorites as $favorite) {
-        $userfavmeal_count.="'".$favorite->user_count."',";
-        $mealsname.="'".$favorite->meal->title."',";
-       }
-       $userfavmeal_count.="]";
-       $mealsname.="]";
+    //   $favorites=Favorite::withcount('user')->get();
+    //   $mealsname="[";
+    //   $userfavmeal_count="[";
+    //   foreach($favorites as $favorite) {
+    //     $userfavmeal_count.="'".$favorite->user_count."',";
+    //     $mealsname.="'".$favorite->meal->title."',";
+    //    }
+    //    $userfavmeal_count.="]";
+    //    $mealsname.="]";
     //    dd($users);
 
          
-      return response()->view('cms.index',['contacts'=>$contacts,'favorites'=>$favorites ,'meals'=>$meals,'mealsname'=>$mealsname,'userfavmeal_count'=>$userfavmeal_count ,'users_count'=>$users_count,'admins_count'=>$admins_count]);
+      return response()->view('cms.index',['contacts'=>$contacts,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
         
     }
 

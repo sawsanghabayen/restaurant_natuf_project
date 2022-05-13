@@ -9,6 +9,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\FrontCategoryController ;
 use App\Http\Controllers\Front\FrontSubCategoryController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\Front\FrontMealController  ;
 use App\Http\Controllers\ResturantController ;
 use App\Http\Controllers\FavoriteController ;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderMealController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +61,9 @@ Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(functi
     Route::resource('admins', AdminController::class);
     // Route::resource('contacts', ContactController::class);
     Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('ordermeals', [OrderMealController::class,'index'])->name('admin.ordermeals');
+    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::get('notifications/{notification}', [NotificationController::class, 'show'])->name('notifications.show');
@@ -69,6 +75,10 @@ Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(functi
 Route::prefix('rest')->middleware(['auth:user', 'verified'])->group(function () {
     Route::resource('favorites', FavoriteController::class);
     Route::resource('users', UserController::class)->except([ 'index' ,'destroy' ]);
+    Route::resource('carts', CartController::class);
+    Route::get('orders', [OrderController::class, 'index'])->name('user.orders');
+    Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('ordermeals', [OrderMealController::class,'index'])->name('user.ordermeals');
     Route::get('logout', [AuthController::class, 'logout'])->name('cms.logoutuser'); 
 
 });   

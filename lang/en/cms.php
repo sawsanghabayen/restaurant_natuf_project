@@ -50,6 +50,7 @@ return [
 
     'categories'=>'Categories',
     'meals'=>'Meals',
+    'orders'=>'orders',
     'category'=>'Category',
     'description'=>'Description',
     'create_category'=>'Create Category',

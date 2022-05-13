@@ -361,6 +361,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
               </li>
               @endcanany
+
+              {{-- @canany(['Create-Meal','Read-Meals']) --}}
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon far fa-envelope"></i>
+                  <p>
+                    {{__('cms.orders')}}
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                  <li class="nav-item">
+                    <a href="{{route('orders.index')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>{{__('cms.index')}}</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              {{-- @endcanany --}}
               @endcanany
               
 

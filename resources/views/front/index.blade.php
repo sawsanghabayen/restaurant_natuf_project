@@ -177,7 +177,7 @@ small, .small {
             <h3>{{$meal->title}}</h3>
             <p>{{$meal->description}}</p>
             <span>{{$meal->price}} $</span>
-            {{-- <a href="#" class="btn">add to cart</a> --}}
+            <a href="#" onclick="performCartStore({{$meal->id }} ,{{$meal->price}})" class="btn">add to cart</a>
         </div>
         
         @endforeach
@@ -372,7 +372,23 @@ small, .small {
 
 <script>
 
+function performCartStore(id ,mealprice ) {
+      axios.post('/rest/carts',{
+            meal_id:  id,
+            quantity :1,
+            price:mealprice,
 
+      })
+      .then(function (response) {
+          console.log(response);
+          toastr.success(response.data.message);
+          // window.location.href = '/rest/index';
+      })
+      .catch(function (error) {
+          console.log(error.response);
+          toastr.error(error.response.data.message);
+      });
+  }
 
   function performDelete(id) {
         
@@ -380,7 +396,7 @@ small, .small {
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
-            window.location.href = '/rest/index';
+            // window.location.href = '/rest/index';
         })
         .catch(function (error) {
             console.log(error.response);
@@ -415,7 +431,7 @@ small, .small {
             toastr.success(response.data.message);
             document.getElementById('review-form').reset();
 
-            window.location.href = '/rest/index';
+            // window.location.href = '/rest/index';
         })
         .catch(function (error) {
             console.log(error.response);

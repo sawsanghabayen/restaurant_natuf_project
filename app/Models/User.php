@@ -52,8 +52,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Meal::class, Favorite::class, 'user_id','meal_id');
     }
     
-
-
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'user_id', 'id');
+    }
+    public function mealscart()
+    {
+        return $this->belongsToMany(Meal::class, Cart::class, 'user_id','meal_id');
+    }
+    
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
 
 
 

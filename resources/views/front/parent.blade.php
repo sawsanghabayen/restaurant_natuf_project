@@ -62,7 +62,7 @@ li.dropdown {
 <!-- header section starts      -->
 
 <header>
-    {{-- <a href="#" class="logo"><i class="fas fa-utensils"></i>{{$resturants[0]->rest_name}}</a> --}}
+    <a href="#" class="logo"><i class="fas fa-utensils"></i>{{$resturants[0]->rest_name}}</a>
     <a href="#" class="logo"><i class="fas fa-utensils"></i></a>
 
     <nav class="navbar">
@@ -86,13 +86,18 @@ li.dropdown {
              <a href="{{route('password.edit')}}" >
                 <i class="fa-solid fa-right-from-bracket"></i> Change Password
               </a> 
+              <a href="{{route('user.orders')}}">
+                <i class="fas fa-shopping-cart"></i> My Order
+              </a> 
              <a href="{{route('cms.logoutuser')}}" >
                 <i class="fa-solid fa-right-from-bracket"></i> Logout
               </a> 
             </div>
           </li>
+     
         {{-- <a href="{{route('users.edit',Auth::guard('user')->user()->id)}}">{{Auth::guard('user')->user()->first_name}} {{Auth::guard('user')->user()->last_name}}</a> --}}
-        
+        <a class="nav-link" href="{{route('carts.index')}}"><i class="fas fa-shopping-cart"></i>
+          Cart</a>
         <a href="{{route('favorites.index')}}" class="fas fa-heart"></a>
         
 
@@ -164,11 +169,7 @@ li.dropdown {
 
         <div class="box">
             <h3>locations</h3>
-            <a href="#">india</a>
-            <a href="#">japan</a>
-            <a href="#">russia</a>
-            <a href="#">USA</a>
-            <a href="#">france</a>
+            <a href="#">{{$resturants[0]->address}}</a>
         </div>
 
         <div class="box">
@@ -182,11 +183,10 @@ li.dropdown {
         </div>
             <div class="box">
             <h3>contact info</h3>
-            {{-- <a href="#">{{$resturants->mobile}}</a> --}}
-            {{-- <a href="#">{{$resturants->telephone}}</a> --}}
-            <a href="#">saw@gmail.com</a>
-            <a href="#">anasbhai@gmail.com</a>
-            {{-- <a href="#">{{$resturants->address}}</a> --}}
+            <a href="#">{{$resturants[0]->mobile}}</a>
+            <a href="#">{{$resturants[0]->telephone}}</a>
+            <a href="#">{{$resturants[0]->email}}</a>
+            
         </div>
 
         <div class="box">
@@ -199,7 +199,7 @@ li.dropdown {
 
     </div>
 
-    {{-- <div class="credit"> copyright @ 2022 by <span>{{$resturants->rest_name}} </span> </div> --}}
+    <div class="credit"> copyright @ 2022 by <span>{{$resturants[0]->rest_name}} </span> </div>
 
 </section>
 
@@ -217,6 +217,25 @@ li.dropdown {
 
 <!-- custom js file link  -->
 <script src="{{asset('front/js/script.js')}}"></script>
+<script>
+function performCartStore(id ,mealprice ) {
+  axios.post('/rest/carts',{
+        meal_id:  id,
+        quantity :1,
+        price:mealprice,
+
+  })
+  .then(function (response) {
+      console.log(response);
+      toastr.success(response.data.message);
+      // window.location.href = '/rest/index';
+  })
+  .catch(function (error) {
+      console.log(error.response);
+      toastr.error(error.response.data.message);
+  });
+}
+</script>
 @yield('scripts')
 
 </body>

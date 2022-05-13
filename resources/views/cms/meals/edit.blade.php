@@ -32,9 +32,11 @@
                                 <label>{{__('cms.sub_category')}}</label>
                                 <select class="form-control" id="sub_category_id">
                                     @foreach ($subcategories as $subcategory)
-                                    <option value="{{$subcategory->id}}">{{$subcategory->title}}</option>
+                                    <option value="{{$subcategory->id}} @if($meal->sub_category_id == $meal->id) selected
+                                        @endif">{{$subcategory->title}}</option>
                                     @endforeach
                                 </select>
+                               
                             </div>
                             <div class="form-group">
                                 <label for="title">{{__('cms.title')}}</label>
