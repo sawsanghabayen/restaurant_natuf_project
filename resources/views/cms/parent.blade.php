@@ -69,27 +69,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- Message Start -->
-          @foreach (auth()->user()->notifications as $notification)
+          @foreach ($notificationsContact as $notificationContact)
           {{-- <a href="#" class="dropdown-item"> --}}
-          <a href="{{route('notifications.show',$notification->id)}}" class="dropdown-item">
+          <a href="{{route('notificationscontact.show',$notificationContact->id)}}" class="dropdown-item">
             <div class="media">
               <img src="{{asset('front/images/avatar1.png')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 style="font-weight: bold;" class="dropdown-item-title">
-                  {{$notification->data['name']}}
+                  {{$notificationContact->data['name']}}
                   <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                 </h3>
                 <h3  style="font-weight: bold;" class="dropdown-item-title">
                   Subject:
                 </h3>
                 <h3 class="dropdown-item-title">
-                  {{$notification->data['subject']}}
+                  {{$notificationContact->data['subject']}}
                 </h3>
                 <h3  style="font-weight: bold;" class="dropdown-item-title">
                   Message:
                 </h3>
-                <p class="text-sm">{{$notification->data['message']}}</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$notification->created_at->diffForHumans()}}</p>
+                <p class="text-sm">{{$notificationContact->data['message']}}</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{$notificationContact->created_at->diffForHumans()}}</p>
               </div>
             </div>
             @endforeach
@@ -100,36 +100,39 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Message Start -->
           
     
-          <a href="{{route('notifications.index')}}" class="dropdown-item dropdown-footer">See All Messages</a>
+          <a href="{{route('notificationscontact.index')}}" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">{{auth()->user()->unReadNotifications()->count()}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
+          @foreach ($notificationsOrder as $notificationOrder)
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
+           <a href="#" class="dropdown-item"> 
+           <a href="{{route('notificationsorder.show',$notificationOrder->id)}}" class="dropdown-item">
+            <div class="media">
+              <div class="media-body">
+                <h3 style="font-weight: bold;" class="dropdown-item-title">
+                  Order #:{{$notificationOrder->data['order_id']}}
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+
+                <h3 class="dropdown-item-title">
+                  Name:{{$notificationOrder->data['fname']}} {{$notificationOrder->data['lname']}}
+                </h3>
+                <p class="text-sm">Total Price: {{$notificationOrder->data['total']}}$</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>Date:{{$notificationOrder->data['date']}}</p>
+              </div>
+            </div>
+            @endforeach
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="{{route('admin.orders')}}" class="dropdown-item dropdown-footer">See All Orders</a>
         </div>
-      </li>
+      </li> 
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -268,7 +271,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-treeview" style="display: none;">
                          
                           <li class="nav-item">
-                            <a href="{{route('notifications.index')}}" class="nav-link">
+                            <a href="{{route('notificationscontact.index')}}" class="nav-link">
                               <i class="far fa-circle nav-icon"></i>
                               <p>{{__('cms.index')}}</p>
                             </a>
@@ -374,7 +377,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
                   <li class="nav-item">
-                    <a href="{{route('orders.index')}}" class="nav-link">
+                    <a href="{{route('admin.orders')}}" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>{{__('cms.index')}}</p>
                     </a>

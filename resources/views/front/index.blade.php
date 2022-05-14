@@ -177,8 +177,13 @@ small, .small {
             <h3>{{$meal->title}}</h3>
             <p>{{$meal->description}}</p>
             <span>{{$meal->price}} $</span>
+            @if(Auth::guard('user')->check())
             <a href="#" onclick="performCartStore({{$meal->id }} ,{{$meal->price}})" class="btn">add to cart</a>
-        </div>
+            @else
+            <a href="{{route('cms.login','user')}}"  class="btn">add to cart</a>
+            @endif
+        
+          </div>
         
         @endforeach
         {{$meals->links()}}

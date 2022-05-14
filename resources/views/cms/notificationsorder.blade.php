@@ -35,18 +35,18 @@
                             </thead>
                             <tbody>
                              
-                                @foreach ($notificationsContact as $notificationContact)
+                                @foreach ($notificationsOrder as $notificationOrder)
                                 {{-- {{dd($notification)}} --}}
                                 <tr>
                                     <td>{{$loop->index+1}}</td>
-                                    <td>{{$notificationContact->data['name']}}</td>
-                                    <td>{{$notificationContact->data['subject']}}</td>
-                                    <td>{{$notificationContact->data['message']}}</td>
-                                    <td>{{$notificationContact->created_at->diffForHumans()}} </td>
-                                    <td>{{$notificationContact->read_at->diffForHumans()}} </td>
+                                    <td>{{$notificationOrder->data['order_id']}}</td>
+                                    <td>{{$notificationOrder->data['name']}}</td>
+                                    <td>{{$notificationOrder->data['total']}}</td>
+                                    <td>{{$notificationOrder->data['date']}} </td>
+                                    <td>{{$notificationOrder->read_at->diffForHumans()}} </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" onclick="confirmDelete('{{$notificationContact->id}}', this)"
+                                            <a href="#" onclick="confirmDelete('{{$notificationOrder->id}}', this)"
                                                 class="btn btn-danger">
                                                 <i class="fas fa-trash"></i>
                                             </a>

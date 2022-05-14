@@ -32,8 +32,8 @@
                                 <label>{{__('cms.sub_category')}}</label>
                                 <select class="form-control" id="sub_category_id">
                                     @foreach ($subcategories as $subcategory)
-                                    <option value="{{$subcategory->id}} @if($meal->sub_category_id == $meal->id) selected
-                                        @endif">{{$subcategory->title}}</option>
+                                    <option value="{{$subcategory->id}}"@if($meal->sub_category_id == $meal->id) selected
+                                        @endif>{{$subcategory->title}}</option>
                                     @endforeach
                                 </select>
                                
@@ -52,7 +52,7 @@
                                 <input type="number" class="form-control" id="price" placeholder="{{__('cms.price')}}" value="{{$meal->price}}">
                             </div>
                             <div class="form-group">
-                                <label for="meal_image">Sub Category Image</label>
+                                <label for="meal_image">Meal Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="meal_image" value="{{$meal->title}}">
@@ -76,7 +76,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button type="button" onclick="performUpdate()"
+                            <button type="button" onclick="performUpdate('{{$meal->id}}')"
                                 class="btn btn-primary">{{__('cms.save')}}</button>
                         </div>
                     </form>
@@ -96,7 +96,7 @@
     $(function () { bsCustomFileInput.init() });
 </script>
 <script>
-    function performUpdate() {
+    function performUpdate(id) {
         var formData = new FormData();
         formData.append('sub_category_id', document.getElementById('sub_category_id').value);
         formData.append('title', document.getElementById('title').value);
@@ -105,10 +105,10 @@
         if(document.getElementById('meal_image').files[0] != undefined) {
             formData.append('image',document.getElementById('meal_image').files[0]);
         }
-        formData.append('_method','PUT');     
         formData.append('active', document.getElementById('active').checked ? 1 : 0);
+        formData.append('_method','PUT');     
 
-        axios.post('/cms/admin/meals',formData)
+        axios.post('/cms/admin/meals/{{$meal->id}}',formData)
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);

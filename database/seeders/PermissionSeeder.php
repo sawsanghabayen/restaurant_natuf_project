@@ -30,6 +30,10 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'Read-Admins', 'guard_name' => 'admin']);
         // Permission::create(['name' => 'Update-Admin', 'guard_name' => 'admin']);
         // Permission::create(['name' => 'Delete-Admin', 'guard_name' => 'admin']);
+
+        Permission::create(['name' => 'Read-Orders', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Update-Order', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'Delete-Order', 'guard_name' => 'admin']);
         
         // Permission::create(['name' => 'Read-Users', 'guard_name' => 'admin']);
         // Permission::create(['name' => 'Delete-User', 'guard_name' => 'admin']);
@@ -48,8 +52,8 @@ class PermissionSeeder extends Seeder
        
 
 
-        Permission::create(['name' => 'Read-Contacts', 'guard_name' => 'admin']);
-        Permission::create(['name' => 'Delete-Contact', 'guard_name' => 'admin']);
+        // Permission::create(['name' => 'Read-Contacts', 'guard_name' => 'admin']);
+        // Permission::create(['name' => 'Delete-Contact', 'guard_name' => 'admin']);
 
         // Permission::create(['name' => 'Create-Meal', 'guard_name' => 'admin']);
         // Permission::create(['name' => 'Read-Meals', 'guard_name' => 'admin']);
@@ -65,6 +69,8 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name' => 'Read-', 'guard_name' => 'user']);
         // Permission::create(['name' => 'Update-', 'guard_name' => 'user']);
         // Permission::create(['name' => 'Delete-', 'guard_name' => 'user']);
+        Permission::create(['name' => 'Read-Orders', 'guard_name' => 'user']);
+        Permission::create(['name' => 'Create-Orders', 'guard_name' => 'user']);
 
         // Permission::create(['name' => 'Read-Categories', 'guard_name' => 'user']);
         // Permission::create(['name' => 'Read-SubCategories', 'guard_name' => 'user']);

@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
-class NotificationController extends Controller
+class NotificationOrderController extends Controller
 {
     // public function __construct()
     // {
@@ -28,9 +28,9 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny' ,Notification::class);
-        $notificationsContact=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get();
-        $notificationsContact->markAsRead();
-        return response()->view('cms.notifications',['notificationsContact'=>$notificationsContact]);
+        $notificationOrder=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get();
+        $notificationOrder->markAsRead();
+        return response()->view('cms.notificationsorder',['notificationOrder'=>$notificationOrder]);
     }
 
     /**

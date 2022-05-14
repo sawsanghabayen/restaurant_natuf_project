@@ -13,6 +13,7 @@ use App\Models\Resturant;
 use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class DashboardController extends Controller
@@ -29,7 +30,11 @@ class DashboardController extends Controller
       $users_count=User::count();
       $orders_count=Order::count();
       $admins_count=Admin::count();
-    //   $categories=Category::all();
+      $notificationsContact=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get();
+      $notificationsOrder=Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->get();
+      //
+    
+      //   $categories=Category::all();
     //   $subcategories=SubCategory::all();
       $meals=Meal::all();
     //   $favorites=Favorite::withcount('user')->get();
@@ -44,9 +49,10 @@ class DashboardController extends Controller
     //    dd($users);
 
          
-      return response()->view('cms.index',['contacts'=>$contacts,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
+      return response()->view('cms.index',['contacts'=>$contacts,'notificationsContact'=>$notificationsContact,'notificationsOrder'=>$notificationsOrder,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
         
     }
+   
 
     /**
      * Show the form for creating a new resource.

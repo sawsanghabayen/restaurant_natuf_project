@@ -238,7 +238,7 @@ html {
 								@php $total+=$cart->quantity *$cart->price; @endphp
 								@endforeach
 							</div>
-                           @if($carts)
+                           @if(!$carts)
                            <div class="block-heading">
                                 <h2>Empty Cart</h2>
                                 <a href="{{route('resturants.index')}}" class="btn btn-primary btn-lg btn-block">Continue To shopping!</a>
@@ -363,6 +363,7 @@ function performCheckout(totalprice) {
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
+			window.location.href = '/rest/orders';
         })
         .catch(function (error) {
             console.log(error.response);

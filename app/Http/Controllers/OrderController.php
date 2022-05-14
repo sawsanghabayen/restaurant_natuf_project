@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderMeal;
+use App\Notifications\NewOrderNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Order::class, 'order');
+    // }
     public function index(Request $request)
     {
         if(auth('user')->check()){
@@ -58,6 +64,12 @@ class OrderController extends Controller
             // $order->address_id = $request->input('');
             $order->date = Carbon::now()->format('Y-m-d');
             $isSaved = $request->user()->orders()->save($order);
+            if($isSaved)
+            $admins=Admin::all();
+            foreach ($admins as $admin) {
+                $admin->notify(new NewOrderNotification($order));
+            }
+
             $cartmeals=Cart::where('user_id' ,'=' , $request->user()->id)->get();
             // dd($cartmeals);
             foreach($cartmeals as $cartmeal){
@@ -113,7 +125,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-       
+        $this->authorize('update' ,$order);
         $validator = Validator($request->all(), [
             'status'=>'required|in:Waitting,Processing,Delivered',
 

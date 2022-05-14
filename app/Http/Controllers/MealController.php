@@ -39,7 +39,7 @@ class MealController extends Controller
          //front
         $favorites=Favorite::all();
         $resturants=Resturant::all();
-        $meals = Meal::paginate(9 ,['*'],'meals');
+        $meals = Meal::orderBy('created_at','DESC')->paginate(9 ,['*'],'meals');
         // dd($meals);
          $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
          if($request->has('id')){
@@ -148,19 +148,24 @@ class MealController extends Controller
         if (!$validator->fails()) {
 
 
-            // $meal->sub_category_id= $request->input('sub_category_id');
-            // $meal->title= $request->input('title');
-            // $meal->description= $request->input('description');
-            // $meal->price= $request->input('price');
-            // $meal->active= $request->has('active');
-            // if ($request->hasFile('image')) {
-            //     $file = $request->file('image');
-            //     $imageName =  time().'_meal_image.' . $file->getClientOriginalExtension();
-            //     $status = $request->file('image')->storePubliclyAs('images/meals', $imageName);
-            //     $imagePath = 'images/meals/' . $imageName;
-            //     $meal->image = $imagePath;
+            $meal->sub_category_id= $request->input('sub_category_id');
+            $meal->title= $request->input('title');
+            $meal->description= $request->input('description');
+            $meal->price= $request->input('price');
+            $meal->active= $request->has('active');
+            if ($request->hasFile('image')) {
+                //Delete user previous image.
+                Storage::delete($meal->image);
+                //Save new image.
+                $file = $request->file('image');
+                //date_time_meal_image.extenssion
+                $imageName = time(). '_meal_image.' . $file->getClientOriginalExtension();
+                $request->file('image')->storePubliclyAs('images/meals', $imageName);
+                $imagePath = 'images/meals/' . $imageName;
+                $meal->image = $imagePath;
+            }
             
-            $isSaved = $meal->update($request->all());
+            $isSaved = $meal->save();
             if ($isSaved) return response()->json([
                 'message' => $isSaved ? 'Saved successfully' : 'Save failed!'
             ], $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);

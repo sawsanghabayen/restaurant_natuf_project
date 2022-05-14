@@ -22,14 +22,11 @@ class ResturantController extends Controller
         $comments=Comment::all();
         $resturants=Resturant::all();
         $favorites=favorite::all();
-        $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
+        $latestmeals=Meal::orderBy('created_at','DESC')->take(6)->get();
         $allcategories=Category::all();
         $categories=Category::paginate(6 ,['*'],'categories');
-        $meals=Meal::paginate(6,['*'],'meals');
-        $meals->when($name ,function($query , $name){
-            return $query->where('name' ,'LIKE',"%{$name}%");
-        });
-
+        $meals=Meal::orderBy('created_at','DESC')->paginate(6,['*'],'meals');
+  
         
         return response()->view('front.index',['allcategories'=>$allcategories,'resturants'=>$resturants,'comments'=>$comments ,'favorites'=>$favorites,'latestmeals'=>$latestmeals,'meals'=>$meals ,'categories'=>$categories]);
     }

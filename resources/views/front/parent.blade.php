@@ -130,7 +130,7 @@ li.dropdown {
                     <a href="#" class="btn">order now</a>
                 </div>
                 <div class="image">
-                    <img style="width:300px;  border-radius: 50%;" src="{{Storage::url($meal->image ?? '')}}" alt="">
+                    <img style="width:300px;  border-radius: 50%;" src="{{Storage::url($latestmeal->image ?? '')}}" alt="">
                     {{-- <img src="{{$latestmeal->imge}}" alt=""> --}}
                 </div>
             </div>

@@ -18,6 +18,7 @@ use App\Http\Controllers\Front\FrontMealController  ;
 use App\Http\Controllers\ResturantController ;
 use App\Http\Controllers\FavoriteController ;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationOrderController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderMealController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,7 @@ Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(functi
         
 Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(function () {
     Route::resource('dashboards',  DashboardController::class);
+    // Route::get('parents', [ DashboardController::class ,'shownotification']);
     Route::resource('categories', CategoryController::class);
     Route::resource('subCategories', SubCategoryController::class);
     Route::resource('meals', MealController::class);
@@ -65,9 +67,12 @@ Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(functi
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
-    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    Route::get('notifications/{notification}', [NotificationController::class, 'show'])->name('notifications.show');
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notificationscontact.index');
+    Route::get('notifications/{notification}', [NotificationController::class, 'show'])->name('notificationscontact.show');
     Route::delete('notifications/{notification}', [NotificationController::class, 'destroy']);
+    Route::get('notificationsorder', [NotificationOrderController::class, 'index'])->name('notificationsorder.index');
+    Route::get('notificationsorder/{notification}', [NotificationOrderController::class, 'show'])->name('notificationsorder.show');
+    Route::delete('notificationsorder/{notification}', [NotificationOrderController::class, 'destroy']);
     Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
 
 });    
