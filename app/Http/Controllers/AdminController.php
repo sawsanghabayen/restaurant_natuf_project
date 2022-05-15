@@ -24,6 +24,7 @@ class AdminController extends Controller
     public function index()
     {
         $admins=Admin::withcount('permissions')->get();
+        
         return response()->view('cms.admins.index',['admins'=>$admins]);
     }
     

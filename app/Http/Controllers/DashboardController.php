@@ -30,13 +30,10 @@ class DashboardController extends Controller
       $users_count=User::count();
       $orders_count=Order::count();
       $admins_count=Admin::count();
-      $notificationsContact=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get();
-      $notificationsOrder=Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->get();
-      //
-    
+      $meals=Meal::all();
+   
       //   $categories=Category::all();
     //   $subcategories=SubCategory::all();
-      $meals=Meal::all();
     //   $favorites=Favorite::withcount('user')->get();
     //   $mealsname="[";
     //   $userfavmeal_count="[";
@@ -49,7 +46,8 @@ class DashboardController extends Controller
     //    dd($users);
 
          
-      return response()->view('cms.index',['contacts'=>$contacts,'notificationsContact'=>$notificationsContact,'notificationsOrder'=>$notificationsOrder,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
+    //   return response()->view('cms.index',['contacts'=>$contacts,'unReadNotificationsMessage'=>$unReadNotificationsMessage,'unReadNotificationsOrder'=>$unReadNotificationsOrder,'notificationsContact'=>$notificationsContact,'notificationsOrder'=>$notificationsOrder,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
+      return response()->view('cms.index',['contacts'=>$contacts,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
         
     }
    

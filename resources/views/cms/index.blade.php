@@ -211,7 +211,7 @@
 
 @endsection
 @section('scripts')
-<script src="{{asset('cms/plugins/chart.js/Chart.min.js')}}"></script>
+{{-- <script src="{{asset('cms/plugins/chart.js/Chart.min.js')}}"></script> --}}
 <script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
 
 <script>

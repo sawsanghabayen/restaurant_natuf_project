@@ -65,11 +65,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">{{auth()->user()->unReadNotifications()->count()}}</span>
+          <span class="badge badge-danger navbar-badge">{{Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->where('read_at','!=','null')->count()}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- Message Start -->
-          @foreach ($notificationsContact as $notificationContact)
+          @foreach (Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get() as $notificationContact)
           {{-- <a href="#" class="dropdown-item"> --}}
           <a href="{{route('notificationscontact.show',$notificationContact->id)}}" class="dropdown-item">
             <div class="media">
@@ -107,10 +107,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">{{auth()->user()->unReadNotifications()->count()}}</span>
+          <span class="badge badge-warning navbar-badge">{{Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->where('read_at','!=','null')->count()}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          @foreach ($notificationsOrder as $notificationOrder)
+          @foreach (Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->get() as $notificationOrder)
           <a href="#" class="dropdown-item">
            <a href="#" class="dropdown-item"> 
            <a href="{{route('notificationsorder.show',$notificationOrder->id)}}" class="dropdown-item">
