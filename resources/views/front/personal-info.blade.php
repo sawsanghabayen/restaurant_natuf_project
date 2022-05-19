@@ -159,10 +159,7 @@ color:#69707a;
         formData.append('last_name', document.getElementById('last_name').value);
         formData.append('email', document.getElementById('email').value);
         formData.append('mobile', document.getElementById('mobile').value);
-        // formData.append('address', document.getElementById('address').value);
-        // if(document.getElementById('image').files[0] != undefined) {
-        //     formData.append('image',document.getElementById('image').files[0]);
-        // }
+        
         formData.append('_method','PUT');
 
         axios.post('/rest/users/{{$user->id}}',formData)
@@ -170,7 +167,7 @@ color:#69707a;
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
-            window.location.href = '/rest/home';
+            window.location.href = '/rest/info';
         })
         .catch(function (error) {
             console.log(error.response);
