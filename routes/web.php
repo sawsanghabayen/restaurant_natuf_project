@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController  ;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\MealController;
@@ -57,22 +59,22 @@ Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(functi
 Route::prefix('cms/admin')->middleware(['auth:admin', 'verified'])->group(function () {
     Route::resource('dashboards',  DashboardController::class);
     // Route::get('parents', [ DashboardController::class ,'shownotification']);
+    Route::get('resturants/{resturant}/edit', [ResturantController::class ,'edit'])->name('resturants.edit');
+    Route::put('resturants/{resturant}', [ResturantController::class ,'update'])->name('resturants.update');
     Route::resource('categories', CategoryController::class);
     Route::resource('subCategories', SubCategoryController::class);
     Route::resource('meals', MealController::class);
     Route::resource('admins', AdminController::class);
-    // Route::resource('contacts', ContactController::class);
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('ordermeals', [OrderMealController::class,'index'])->name('admin.ordermeals');
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
-    Route::get('notifications', [NotificationController::class, 'index'])->name('notificationscontact.index');
-    Route::get('notifications/{notification}', [NotificationController::class, 'show'])->name('notificationscontact.show');
-    Route::delete('notifications/{notification}', [NotificationController::class, 'destroy']);
-    Route::get('notificationsorder', [NotificationOrderController::class, 'index'])->name('notificationsorder.index');
-    Route::get('notificationsorder/{notification}', [NotificationOrderController::class, 'show'])->name('notificationsorder.show');
-    Route::delete('notificationsorder/{notification}', [NotificationOrderController::class, 'destroy']);
+    Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
+    // Route::get('notifications/{notification}', [ContactController::class, 'show'])->name('notificationscontact.show');
+    // Route::delete('notifications/{notification}', [NotificationController::class, 'destroy']);
+    // Route::get('notificationsorder', [NotificationOrderController::class, 'index'])->name('notificationsorder.index');
+    // Route::delete('notificationsorder/{notification}', [NotificationOrderController::class, 'destroy']);
     Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
 
 });    
@@ -81,6 +83,7 @@ Route::prefix('rest')->middleware(['auth:user', 'verified'])->group(function () 
     Route::resource('favorites', FavoriteController::class);
     Route::resource('users', UserController::class)->except([ 'index' ,'destroy' ]);
     Route::resource('carts', CartController::class);
+    Route::resource('addresses', AddressController::class);
     Route::get('orders', [OrderController::class, 'index'])->name('user.orders');
     Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('ordermeals', [OrderMealController::class,'index'])->name('user.ordermeals');

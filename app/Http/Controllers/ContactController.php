@@ -21,10 +21,12 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny' ,Contact::class);
-        $notifications=$request->user()->notifications;
-        $notifications->markAsRead();
         $contacts=Contact::all();
-        return response()->view('cms.contact.index',['contacts'=>$contacts]);
+        Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get()->markAsRead();
+        if($request->has('contact_id'))
+        $contacts=Contact::where('id','=',$request->input('contact_id'))->get();
+
+        return response()->view('cms.notifications',['contacts'=>$contacts]);
     }
 
     /**

@@ -57,6 +57,7 @@ class NewMessageNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
+            'id'=>$this->contact->id,
             'subject'=>$this->contact->subject,
             'name'=>$this->contact->name,
             'message'=>$this->contact->message,

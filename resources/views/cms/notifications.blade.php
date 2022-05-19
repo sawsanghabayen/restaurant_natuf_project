@@ -29,24 +29,22 @@
                                     <th>{{__('cms.subject')}}</th>
                                     <th>{{__('cms.message')}}</th>
                                     <th>{{__('cms.created_at')}}</th>
-                                    <th>{{__('cms.read_at')}}</th>
                                     <th style="width: 40px">{{__('cms.settings')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                              
-                                @foreach ($notificationsContact as $notificationContact)
+                                @foreach ($contacts as $contact)
                                 {{-- {{dd($notification)}} --}}
                                 <tr>
                                     <td>{{$loop->index+1}}</td>
-                                    <td>{{$notificationContact->data['name']}}</td>
-                                    <td>{{$notificationContact->data['subject']}}</td>
-                                    <td>{{$notificationContact->data['message']}}</td>
-                                    <td>{{$notificationContact->created_at->diffForHumans()}} </td>
-                                    <td>{{$notificationContact->read_at->diffForHumans()}} </td>
+                                    <td>{{$contact->name}}</td>
+                                    <td>{{$contact->subject}}</td>
+                                    <td>{{$contact->message}}</td>
+                                    <td>{{$contact->created_at->diffForHumans()}} </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" onclick="confirmDelete('{{$notificationContact->id}}', this)"
+                                            <a href="#" onclick="confirmDelete('{{$contact->id}}', this)"
                                                 class="btn btn-danger">
                                                 <i class="fas fa-trash"></i>
                                             </a>

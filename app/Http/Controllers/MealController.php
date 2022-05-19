@@ -41,7 +41,7 @@ class MealController extends Controller
         $resturants=Resturant::all();
         $meals = Meal::orderBy('created_at','DESC')->paginate(9 ,['*'],'meals');
         // dd($meals);
-         $latestmeals=Meal::orderBy('created_at','ASC')->take(6)->get();
+         $latestmeals=Meal::orderBy('created_at','DESC')->take(6)->get();
          if($request->has('id')){
              $meals =Meal::where('sub_category_id','=',$request->input('id'))->paginate();
          }

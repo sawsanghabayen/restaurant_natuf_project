@@ -27,10 +27,10 @@ class NotificationOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny' ,Notification::class);
-        $notificationOrder=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get();
-        $notificationOrder->markAsRead();
-        return response()->view('cms.notificationsorder',['notificationOrder'=>$notificationOrder]);
+        // $this->authorize('viewAny' ,Notification::class);
+        // $notificationOrder=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get();
+        // $notificationOrder->markAsRead();
+        // return response()->view('cms.notificationsorder',['notificationOrder'=>$notificationOrder]);
     }
 
     /**
@@ -65,12 +65,12 @@ class NotificationOrderController extends Controller
     public function show( $id )
     {
         // dd($id);
-        $notificationsContact=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')
-        ->where('id' ,$id)->get();
-        // dd($notifications);
-        // $notifications=$request->user()->notifications()->get();
-        $notificationsContact->markAsRead();
-        return response()->view('cms.notifications',['notificationsContact'=>$notificationsContact]);
+        // $notificationsContact=Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')
+        // ->where('id' ,$id)->get();
+        // // dd($notifications);
+        // // $notifications=$request->user()->notifications()->get();
+        // $notificationsContact->markAsRead();
+        // return response()->view('cms.notifications',['notificationsContact'=>$notificationsContact]);
     }
 
     /**

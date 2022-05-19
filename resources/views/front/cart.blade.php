@@ -1,302 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sawsan Resturant | My Cart</title>
+    <meta charset="utf-8">
+    <title>Cart</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-	<link rel="stylesheet" href="{{asset('cms/plugins/fontawesome-free/css/all.min.css')}}">
-	
-	<link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
 
-	{{-- <link rel="stylesheet" href="assets/css/style.css"> --}}
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
 
-    <style>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-* {
-    font-family: 'Nunito', sans-serif;
-    margin: 0;
-    padding: 0;
-	padding-top:10;
-    box-sizing: border-box;
-    text-decoration: none;
-    outline: none;
-    border: none;
-    text-transform: capitalize;
-    transition: all .2s linear;
-}
-html {
-    /* font-size: 62.5%; */
-    overflow-x: hidden;
-    scroll-padding-top: 5.5rem;
-    scroll-behavior: smooth;
-}
+    <!-- Libraries Stylesheet -->
+    <link href="{{asset('cart/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
-	
-.heading {
-    text-align: center;
-    color: var(--black);
-    font-size: 3rem;
-    padding-bottom: 2rem;
-    text-transform: uppercase;
-}
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{asset('cart/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
 
- .shopping-cart{
-	padding-bottom: 50px;
-	font-family: 'Montserrat', sans-serif;
-}
-
-.shopping-cart.dark{
-	background-color: #f6f6f6;
-}
-
-.shopping-cart .content{
-	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
-	background-color: white;
-}
-
-.shopping-cart .block-heading{
-    padding-top: 50px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.shopping-cart .block-heading p{
-	text-align: center;
-	max-width: 420px;
-	margin: auto;
-	opacity:0.7;
-}
-
-.shopping-cart .dark .block-heading p{
-	opacity:0.8;
-}
-
-.shopping-cart .block-heading h1,
-.shopping-cart .block-heading h2,
-.shopping-cart .block-heading h3 {
-	margin-bottom:1.2rem;
-	color: #3b99e0;
-}
-
-.shopping-cart .items{
-	margin: auto;
-}
-
-.shopping-cart .items .product{
-	margin-bottom: 20px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-.shopping-cart .items .product .info{
-	padding-top: 0px;
-	text-align: center;
-}
-
-.shopping-cart .items .product .info .product-name{
-	font-weight: 600;
-}
-
-.shopping-cart .items .product .info .product-name .product-info{
-	font-size: 14px;
-	margin-top: 15px;
-}
-
-.shopping-cart .items .product .info .product-name .product-info .value{
-	font-weight: 400;
-}
-
-.shopping-cart .items .product .info .quantity .quantity-input{
-    margin: auto;
-    width: 80px;
-}
-
-.shopping-cart .items .product .info .price{
-	margin-top: 15px;
-    font-weight: bold;
-    font-size: 22px;
- }
-
-.shopping-cart .summary{
-	border-top: 2px solid #5ea4f3;
-    background-color: #f7fbff;
-    height: 100%;
-    padding: 30px;
-}
-
-.shopping-cart .summary h3{
-	text-align: center;
-	font-size: 1.3em;
-	font-weight: 600;
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-.shopping-cart .summary .summary-item:not(:last-of-type){
-	padding-bottom: 10px;
-	padding-top: 10px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.shopping-cart .summary .text{
-	font-size: 1em;
-	font-weight: 600;
-}
-
-.shopping-cart .summary .price{
-	font-size: 1em;
-	float: right;
-}
-
-.shopping-cart .summary button{
-	margin-top: 20px;
-}
-
-@media (min-width: 768px) {
-	.shopping-cart .items .product .info {
-		padding-top: 25px;
-		text-align: left; 
-	}
-
-	.shopping-cart .items .product .info .price {
-		font-weight: bold;
-		font-size: 22px;
-		top: 17px; 
-	}
-
-	.shopping-cart .items .product .info .quantity {
-		text-align: center; 
-	}
-	.shopping-cart .items .product .info .quantity .quantity-input {
-		padding: 4px 10px;
-		text-align: center; 
-	}
-
-}
-</style>
 </head>
+
 <body>
-
-<main  class="page">
-	 	<section class="shopping-cart dark">
-	 		<div class="container">
-		        <div class="block-heading">
-		          <h2>Shopping Cart</h2>
-		          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
-		        </div>
-		        <div class="content">
-					<div class="row">
-						<div class="col-md-12 col-lg-8">
-							@php $total=0; @endphp
-								@foreach ($carts as $cart )
-							<div class="items">
-								{{-- {{dd($cart)}} --}}
-
-								
-								 
-				 				<div class="product">
-									 <div class="row">
-					 					<div class="col-md-3">
-					 						<img class="img-fluid mx-auto d-block image" src="{{Storage::url($cart->meal->image ?? '')}}">
-					 					</div>
-									 </div>
-					 					<div class="col-md-8">
-					 						<div class="info">
-						 						<div class="row">
-							 						<div class="col-md-5 product-name">
-							 							<div class="product-name">
-								 							<a href="#">{{$cart->meal->title}}</a>
-								 							<div class="product-info">
-									 							{{$cart->meal->description}}
-									 						</div>
-									 					</div>
-							 						</div>
-							 						<div class="col-md-4 quantity">
-														 <form>
-							 							<label for="quantity">Quantity:</label>
-							 							<input onchange="updateQuantity('{{$cart->id}}')" id="quantity_{{$cart->id}}" type="number" value ="{{$cart->quantity}}" class="form-control quantity-input"  min="1">
-														 </form>
-													</div>
-							 						<div class="col-md-3 price">
-							 							<span>${{$cart->price}}</span> 
-
-														 <a href="#" onclick="confirmDelete('{{$cart->id}}' ,this)"
-														 class="btn btn-danger">
-														 <i class="fas fa-trash"></i> </a>
-							 						</div>
-							 					
-							 					</div>
-							 				</div>
-					 					</div>
-					 				</div>
-								</div>
-								@php $total+=$cart->quantity *$cart->price; @endphp
-								@endforeach
-							</div>
-                           @if(!$carts)
-                           <div class="block-heading">
-                                <h2>Empty Cart</h2>
-                                <a href="{{route('resturants.index')}}" class="btn btn-primary btn-lg btn-block">Continue To shopping!</a>
-                              </div>
-                              @else
-							<div class="col-md-12 col-lg-4">
-								<div class="summary">
-									<h3>Summary</h3>
-									<div class="summary-item"><span class="text">Total</span><span class="price">{{$total}}</span></div>
-									<button type="button" onclick="performCheckout('{{$total}}')" class="btn btn-primary btn-lg btn-block">Palce Order</button>
-								</div>
-							</div>
-                            @endif
-		 			</div> 
+   {{-- <div class="container-fluid"> --}}
+                {{-- <div class="row align-items-center py-3 px-xl-5">
+                    <div class="col-lg-3 d-none d-lg-block">
+                        <a href="" class="text-decoration-none">
+                            <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-6 text-left">
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for products">
+                                <div class="input-group-append">
+                                    <span class="input-group-text bg-transparent text-primary">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+            
+                        <div class="col-lg-3 col-6 text-right">
+            
+                        <a href="{{route('favorites.index')}}" class="btn border">
+                            <i class="fas fa-heart text-primary"></i>
+                            <span class="badge"></span>
+                        </a>
+                        <a href="" class="btn border">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge">0</span>
+                        </a>
+                       </div>                  
+            
+                </div>
+            </div>
+            
+            
+        </div>
+    </div> --}}
+    <!-- Topbar End -->
 
 
-					{{-- <div class="row">
-					<div class="col-md-12 col-lg-6">
-					 <form id="save-address" class="addreses">
-						 <label for="city"><i class="fa fa-institution"></i> City</label>
-						 <input type="text" id="name" placeholder="New York">
-
-						 <label for="area"><i class="fa fa-institution"></i>Area</label>
-						 <input type="text" id="area"  placeholder="Area">
-
-						<label for="treet"><i class="fa fa-institution"></i> Street</label>
-						<input type="text" id="street" placeholder="Street">
-							<label for="building">Building Name</label>
-							<input type="text" id="building"  placeholder="Building Name">
-							<label for="flat">Flat Number</label>
-							<input type="text" id="flate_num"  placeholder="# Flat">
-							<div class="row">
-							<div class="col-md-12 col-lg-3">
-							<button type="button" onclick="performSaveAddress()" class="btn btn-primary btn-lg btn-block">Save</button>
-						</div>
-						</div>
-						</div>
-					  </form> --}}
-					{{-- </div>
-					</div> --}}
-		 		</div>
-	 		</div>
-		</section>
-</main>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('cms/dist/js/adminlte.min.js')}}"></script>
-<script src="https://unpkg.com/axios@0.27.2/dist/axios.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+   
 
 
-<script>
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">My Cart</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="{{route('resturants.index')}}">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Shopping Cart</p>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Cart Start -->
+    @if($cartisFull)
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Meals</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            {{-- <th>Price</th> --}}
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        @php $total=0; @endphp
+                        @foreach ($carts as $cart )
+
+                        <tr>
+                            <td class="align-middle"><img src="{{Storage::url($cart->meal->image ?? '')}}" alt="" style="width: 50px;"> {{$cart->meal->title}}</td>
+                            <td name="price" class="align-middle">{{$cart->price}}</td>
+                            <td class="align-middle">
+                                {{-- <div onclick="changequantity('{{$cart->id}}')" id="quantity_{{$cart->id}}" value ="{{$cart->quantity}}" min="1" class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div  class="input-group-btn">
+                                        <button  class="btn btn-sm btn-primary btn-minus" >
+                                        <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input  type="text" class="form-control form-control-sm bg-secondary text-center" >
+                                    <div class="input-group-btn">
+                                        <button  class="btn btn-sm btn-primary btn-plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div> --}}
+                            
+
+                                    <form>
+                                    <input style="width:100px" name="qty" onchange="changequantity('{{$cart->id}}')" id="quantity_{{$cart->id}}" type="number" value ="{{$cart->quantity}}" class="form-control quantity-input"  min="1">
+                                    </form>
+                            </td>
+                            {{-- <td  class="align-middle">
+                                <input  style="width:25px" name="price" value ="{{$cart->price}}"/>
+                            </td> --}}
+                            {{-- <td  class="align-middle" name="price" >{{$cart->price}}</td> --}}
+                            <td class="align-middle"><a onclick="confirmDelete('{{$cart->id}}' ,this)" class="btn btn-sm btn-primary"><i class="fa fa-times"></i>
+                            </a></td>
+                        </tr>
+                      @php $total+=$cart->quantity *$cart->price; @endphp
+						@endforeach
+                   
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4">
+               
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                    </div>
+
+                  
+
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 id="total" class="font-weight-bold"> {{$total}} </h5>
+                        </div>
+                        {{-- value="{{$total}}" --}}
+                        <a class="btn btn-block btn-primary my-3 py-3" href="{{route('addresses.index')}}" role="button">Checkout</a>
+                    </div>
+                </div>
+                @else
+                <div class="block-heading">
+                    <h2>Empty Cart !</h2>
+                    <a style="width:200px" href="{{route('resturants.index')}}" class="btn btn-primary btn-lg btn-block">Continue To Order!</a>
+                  </div>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <!-- Cart End -->
+
+{{-- 
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">E</span>Shopper</h1>
+                </a>
+                <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control border-0 py-4" placeholder="Your Name" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control border-0 py-4" placeholder="Your Email"
+                                    required="required" />
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed
+                    by
+                    <a class="text-dark font-weight-semi-bold" href="https://htmlcodex.com">HTML Codex</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="">
+            </div>
+        </div>
+    </div> --}}
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('front/lib/easing/easing.min.js')}}"></script>
+    <script src="{{asset('front/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="{{asset('front/mail/jqBootstrapValidation.min.js')}}"></script>
+    <script src="{{asset('front/mail/contact.js')}}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{asset('front/js/main.js')}}"></script>
+    <script src="https://unpkg.com/axios@0.27.2/dist/axios.min.js"></script>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+       <script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+
+    <script>
+    function changequantity(id) {
+
+        axios.put('/rest/carts/'+id, {
+            quantity: document.getElementById('quantity_'+id).value,
+        })
+        .then(function (response) {
+            findTotal();
+            console.log(response);
+            toastr.success(response.data.message);
+        })
+        .catch(function (error) {
+            console.log(error.response);
+            toastr.error(error.response.data.message);
+        });
+    }
+    function findTotal(){
+    var arr = document.getElementsByName('qty');
+    var price =document.getElementsByName('price').innerHTML;
+    alert(price.data);
+    // var price = parseFloat(document.getElementsById('price').innerHTML);
+	// var price = parseFloat(document.getElementsByName('price').innerHTML.replace(",", "").replace("$", "").val());
+
+    var tot=0;
+    for(var i=0;i<arr.length;i++){
+        if( parseFloat(arr[i].value) && parseFloat(price[i]) )
+            tot += parseFloat(arr[i].value * price[i]);
+    }
+    document.getElementById('total').value = tot;
+}
+    
     function confirmDelete(id,reference) {
         Swal.fire({
             title: 'Are you sure?',
@@ -318,8 +314,8 @@ html {
         .then(function (response) {
             console.log(response);
             toastr.success(response.data.message);
-            // reference.closest('tr').remove();
-			$(reference).closest(".product").remove()
+            reference.closest('tr').remove();
+
             showMessage(response.data);
         })
         .catch(function (error) {
@@ -336,62 +332,7 @@ html {
             data.icon
         );
     }
-
-	// $("input").change(
-		
-		function updateQuantity(id) {
-        axios.put('/rest/carts/'+id, {
-            quantity: document.getElementById('quantity_'+id).value,
-        })
-        .then(function (response) {
-            console.log(response);
-            toastr.success(response.data.message);
-        })
-        .catch(function (error) {
-            console.log(error.response);
-            toastr.error(error.response.data.message);
-        });
-    }
-  
-// );
-
-function performCheckout(totalprice) {
-        axios.post('/rest/orders', {
-            total: totalprice,
-       
-       })
-        .then(function (response) {
-            console.log(response);
-            toastr.success(response.data.message);
-			window.location.href = '/rest/orders';
-        })
-        .catch(function (error) {
-            console.log(error.response);
-            toastr.error(error.response.data.message);
-        });
-    }
-
-	// function performSaveAddress() {
-    //     axios.post('/front/addresses', {
-	// 		name: document.getElementById('name').value,
-    //         area: document.getElementById('area').value,
-    //         street: document.getElementById('street').value,
-    //         building: document.getElementById('building').value,
-    //         flate_num: document.getElementById('flate_num').value,
-       
-    //    })
-    //     .then(function (response) {
-    //         console.log(response);
-    //         toastr.success(response.data.message);
-	// 		document.getElementById('save-address').reset();
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error.response);
-    //         toastr.error(error.response.data.message);
-    //     });
-    // }
-
-
-</script>
+    </script>
 </body>
+
 </html>

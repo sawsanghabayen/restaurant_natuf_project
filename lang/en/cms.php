@@ -25,6 +25,7 @@ return [
     'admins' => 'Admins',
     'create_admin' => 'Create Admin',
     'edit_admin' => 'Edit Admin',
+    'edit_info_rest' => 'Edit Info Resturant ',
     'logout' => 'Logout',
     'roles' => 'Roles',
     'role' => 'Role',
@@ -68,6 +69,10 @@ return [
     'contacts'=>'Contacts',
     'subject'=>'Subject',
     'dashboard'=>'Dashboard',
+    'from'=>'From',
+    'address'=>'Address',
+    'telephone'=>'Telephone',
+    'edit_resturant'=>'Edit Info. Resturant',
 
     
     

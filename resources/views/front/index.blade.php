@@ -157,7 +157,7 @@ small, .small {
       @foreach ($meals as $meal)
       <div class="box">
         @if(Auth::guard('user')->check())
-        <a href="#" onclick="performFavoriteStore({{$meal->id}})"   class="fas fa-heart" 
+        <a  onclick="performFavoriteStore({{$meal->id}})"   class="fas fa-heart" 
           @if($meal->is_favorite)
           style="background: var(--green);
               color: #fff;
@@ -178,9 +178,9 @@ small, .small {
             <p>{{$meal->description}}</p>
             <span>{{$meal->price}} $</span>
             @if(Auth::guard('user')->check())
-            <a href="#" onclick="performCartStore({{$meal->id }} ,{{$meal->price}})" class="btn">add to cart</a>
+            <a onclick="performCartStore({{$meal->id }} ,{{$meal->price}})" class="btn">add to cart</a>
             @else
-            <a href="{{route('cms.login','user')}}"  class="btn">add to cart</a>
+            <a href="{{route('cms.login','user')}}"  class="btn"class="btn">add to cart</a>
             @endif
         
           </div>
@@ -221,7 +221,6 @@ small, .small {
                     <span>24/7 service</span>
                 </div>
             </div>
-            <a href="#" class="btn">learn more</a>
         </div>
 
     </div>
@@ -316,7 +315,7 @@ small, .small {
         
         </div>
 
-        <input type="submit" onclick="performStore()" value="comment" class="btn">
+        <input type="button" onclick="performStore()" value="comment" class="btn">
 
     </form>
 
@@ -354,7 +353,7 @@ small, .small {
         
         </div>
 
-        <input type="submit" onclick="performStoreContact()" value="contact" class="btn">
+        <input type="button" onclick="performStoreContact()" value="contact" class="btn">
 
     </form>
 

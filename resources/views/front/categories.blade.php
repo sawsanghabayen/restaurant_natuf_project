@@ -114,7 +114,7 @@
         <div class="box">
             {{-- <a href="#" class="fas fa-eye"></a> --}}
             {{-- <img src="{{$meal->image}}" alt=""> --}}
-            <img src="{{asset('front/images/dish-4.png')}}" alt="">
+            <img  src="{{Storage::url($category->image ?? '')}}" />
             <h3>{{$category->name}}</h3>
             <p>{{$category->description}}</p>
             <a href="{{route('restsubcategories.index',['id' => $category->id])}}" class="btn">Show SubCategories...</a>

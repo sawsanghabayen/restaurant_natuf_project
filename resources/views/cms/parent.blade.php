@@ -65,13 +65,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">{{Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->where('read_at','!=','null')->count()}}</span>
+          <span class="badge badge-danger navbar-badge">{{auth()->user()->unReadNotifications()->where('type','=','App\Notifications\NewMessageNotification')->count()}}</span>
+          {{-- <span class="badge badge-danger navbar-badge">{{Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->where('read_at','=','null')->count()}}</span> --}}
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- Message Start -->
           @foreach (Auth()->user()->notifications()->where('type','=','App\Notifications\NewMessageNotification')->get() as $notificationContact)
           {{-- <a href="#" class="dropdown-item"> --}}
-          <a href="{{route('notificationscontact.show',$notificationContact->id)}}" class="dropdown-item">
+          <a href="{{route('contacts.index',['contact_id'=>$notificationContact->data['id']])}}" class="dropdown-item">
             <div class="media">
               <img src="{{asset('front/images/avatar1.png')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
@@ -100,29 +101,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Message Start -->
           
     
-          <a href="{{route('notificationscontact.index')}}" class="dropdown-item dropdown-footer">See All Messages</a>
+          <a href="{{route('contacts.index')}}" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">{{Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->where('read_at','!=','null')->count()}}</span>
+          {{-- {{dd(Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->get())}} --}}
+          <span class="badge badge-warning navbar-badge">{{auth()->user()->unReadNotifications()->where('type','=','App\Notifications\NewOrderNotification')->count()}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           @foreach (Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->get() as $notificationOrder)
           <a href="#" class="dropdown-item">
            <a href="#" class="dropdown-item"> 
-           <a href="{{route('notificationsorder.show',$notificationOrder->id)}}" class="dropdown-item">
+           <a href="{{route('admin.orders',['order_id'=>$notificationOrder->data['id']])}}" class="dropdown-item">
             <div class="media">
               <div class="media-body">
                 <h3 style="font-weight: bold;" class="dropdown-item-title">
-                  Order #:{{$notificationOrder->data['order_id']}}
+                  Order #:{{$notificationOrder->data['id']}}
                   <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                 </h3>
 
                 <h3 class="dropdown-item-title">
-                  Name:{{$notificationOrder->data['fname']}} {{$notificationOrder->data['lname']}}
+                  Name:{{$notificationOrder->data['first_name']}} {{$notificationOrder->data['last_name']}}
                 </h3>
                 <p class="text-sm">Total Price: {{$notificationOrder->data['total']}}$</p>
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>Date:{{$notificationOrder->data['date']}}</p>
@@ -271,7 +273,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-treeview" style="display: none;">
                          
                           <li class="nav-item">
-                            <a href="{{route('notificationscontact.index')}}" class="nav-link">
+                            <a href="{{route('contacts.index')}}" class="nav-link">
                               <i class="far fa-circle nav-icon"></i>
                               <p>{{__('cms.index')}}</p>
                             </a>
@@ -389,6 +391,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               
 
               <li class="nav-header">{{__('cms.settings')}}</li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                <a href="{{route('resturants.edit', 1)}}" class="nav-link">
+              <i class="fa-solid fa-gear"></i>
+              <p class="text">{{__('cms.edit_info_rest')}}</p>
+            </a>
+          </li>
               <li class="nav-item">
                 <a href="{{route('password.edit')}}" class="nav-link">
                   <i class="nav-icon far fa-circle text-danger"></i>

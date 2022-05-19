@@ -58,7 +58,7 @@ class UserController extends Controller
             $user->first_name = $request->input('first_name');
             $user->last_name = $request->input('last_name');
             $user->email = $request->input('email');
-            $user->address = $request->input('address');
+            // $user->address = $request->input('address');
             $user->password = Hash::make($request->input('password'));
             $user->mobile = $request->input('mobile');
             // $user->image = asset('front/images/avatar1.png');
@@ -113,7 +113,7 @@ class UserController extends Controller
         $validator = Validator($request->all(), [
             'first_name' => 'required|string|min:3',
             'last_name' => 'required|string|min:3',
-            'address' => 'required|string|min:3',
+            // 'address' => 'required|string|min:3',
             'email' => 'required|email|unique:admins,email,'.$user->id,
             'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             // 'address' => 'required|string|min:3',
@@ -125,7 +125,6 @@ class UserController extends Controller
             // $user->address = $request->input('address');
             $user->email = $request->input('email');
             $user->mobile = $request->input('mobile');
-            $user->address = $request->input('address');
             // if ($request->hasFile('image')) {
             //     //Delete category previous image.
             //     Storage::delete($user->image);

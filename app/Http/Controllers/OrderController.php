@@ -26,14 +26,19 @@ class OrderController extends Controller
     {
         if(auth('user')->check()){
             // $meals=$request->user()->meals->get();
-            $orders=order::where('user_id' ,'=' ,$request->user()->id)->get();
+            $orders=Order::where('user_id' ,'=' ,$request->user()->id)->get();
             return response()->view('front.order',['orders'=>$orders]);
     }
          else{
-            $orders=order::with('user')->get();
-            return response()->view('cms.orders.index',['orders'=>$orders]);
-         }
+            if($request->has('order_id')){
+        $orders=Order::where('id','=',$request->input('order_id'))->get();
+      Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')->get()->markAsRead();
     }
+    else
+            $orders=Order::with('user')->get();
+            return response()->view('cms.orders.index',['orders'=>$orders]);
+         
+    }}
 
     /**
      * Show the form for creating a new resource.
@@ -55,13 +60,13 @@ class OrderController extends Controller
     {
         $validator = Validator($request->all(), [
             'total' => 'required',
-            // 'date' => 'required',
+            'address_id' => 'required|numeric|exists:addresses,id',
         ]);
 
         if (!$validator->fails()) {
             $order = new Order();
             $order->total = $request->total;
-            // $order->address_id = $request->input('');
+            $order->address_id = $request->input('address_id');
             $order->date = Carbon::now()->format('Y-m-d');
             $isSaved = $request->user()->orders()->save($order);
             if($isSaved)
@@ -100,9 +105,14 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        // $notificationsOrder=Auth()->user()->notifications()->where('type','=','App\Notifications\NewOrderNotification')
+        // ->where('id' ,$id )->get();
+        // // dd($notifications);
+        // // $notifications=$request->user()->notifications()->get();
+        // $notificationsOrder->markAsRead();
+        // return response()->view('cms.orders.index',['notificationsOrdert'=>$notificationsOrder]);
     }
 
     /**

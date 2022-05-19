@@ -19,12 +19,14 @@ class CartController extends Controller
     {
         
         if(auth('user')->check()){
-            $resturants=Resturant::all();
+            // $resturants=Resturant::all();
             // $meals=Meal::all();
-            $latestmeals=meal::orderBy('created_at','ASC')->take(6)->get();
+            // $latestmeals=meal::orderBy('created_at','ASC')->take(6)->get();
             // $meals=$request->user()->meals->get();
             $carts=Cart::with('meal')->where('user_id' ,'=' ,$request->user()->id)->get();
-            return response()->view('front.cart',['carts'=>$carts ,'resturants'=>$resturants ,'latestmeals'=>$latestmeals]);}
+            $cartisFull=Cart::where('user_id', auth('user')->id())->exists();
+            return response()->view('front.cart',['carts'=>$carts ,'cartisFull'=>$cartisFull ]);
+        }
     }
 
     /**

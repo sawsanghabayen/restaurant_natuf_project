@@ -112,13 +112,13 @@ small, .small {
         @foreach ($favorites as $favorite)
         <div class="box">
           {{-- {{dd($favorite);}} --}}
-            <a href="{{Route('favorites.store',['meal_id'=>$favorite->id])}}" class="fas fa-heart" style="background: var(--green); color: #fff;
+          <a  onclick="performFavoriteStore({{$favorite->id}})" class="fas fa-heart" style="background: var(--green); color: #fff;
             text-decoration: none;"></a>
             <img src="{{Storage::url($favorite->image ?? '')}}" alt="">
             <h3>{{$favorite->title}}</h3>
             <p>{{$favorite->description}}</p>
             <span>{{$favorite->price}}</span>
-            {{-- <a href="#" class="btn">add to cart</a> --}}
+            <a onclick="performCartStore({{$favorite->id }} ,{{$favorite->price}})" class="btn">add to cart</a>
         </div>
         
         @endforeach
@@ -138,3 +138,51 @@ small, .small {
 
 <!-- footer section starts  -->
 @section('scripts')
+
+  <!-- jQuery -->
+  <script src="{{asset('cms/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{asset('cms/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{asset('cms/dist/js/adminlte.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios@0.27.2/dist/axios.min.js"></script>
+<script src="{{asset('cms/plugins/toastr/toastr.min.js')}}"></script>
+
+
+<script>
+
+function performFavoriteStore(id) {
+        axios.post('/rest/favorites',{
+              meal_id:  id,
+        })
+        .then(function (response) {
+            console.log(response);
+            toastr.success(response.data.message);
+            window.location.href = '/rest/favorites';
+        })
+        .catch(function (error) {
+            console.log(error.response);
+            toastr.error(error.response.data.message);
+        });
+    }
+
+function performCartStore(id ,mealprice ) {
+  axios.post('/rest/carts',{
+        meal_id:  id,
+        quantity :1,
+        price:mealprice,
+
+  })
+  .then(function (response) {
+      console.log(response);
+      toastr.success(response.data.message);
+      // window.location.href = '/rest/index';
+  })
+  .catch(function (error) {
+      console.log(error.response);
+      toastr.error(error.response.data.message);
+  });
+}
+</script>
+@endsection

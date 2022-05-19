@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" href="{{asset('cms/plugins/toastr/toastr.min.css')}}">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style>
@@ -246,6 +247,8 @@ $(document).ready(function(){
                     <tr>
                         <th>#</th>
                         <th>User Name</th>
+                        <th>Mobile</th>
+                        <th>Address</th>
                         <th>Order Date</th>						
                         <th>Status</th>						
                         <th>Net Amount</th>
@@ -258,6 +261,8 @@ $(document).ready(function(){
                             
                         <td>{{$loop->index+1}}</td>
                         <td>{{$order->user->first_name}} {{$order->user->last_name}}</td>
+                        <td>{{$order->user->mobile}}</td>                        
+                        <td>{{$order->address->name}} |{{$order->address->area}} |{{$order->address->street}}|{{$order->address->building}} |{{$order->address->flate_num}}</td>                        
                         <td>{{$order->date}}</td>                        
                         {{-- <td><span class="status text-success">&bull;</span> {{$order->status}}</td> --}}
                         <td> 

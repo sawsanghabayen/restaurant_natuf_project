@@ -56,9 +56,10 @@ class NewOrderNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'order_id'=>$this->order->id,
-            'fname'=>$this->order->user->first_name,
-            'lname'=>$this->order->user->last_name,
+            'id'=>$this->order->id,
+            'status'=>$this->order->status,
+            'first_name'=>$this->order->user->first_name,
+            'last_name'=>$this->order->user->last_name,
             'date'=>$this->order->date,
             'total'=>$this->order->total,
 

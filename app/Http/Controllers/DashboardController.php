@@ -27,27 +27,14 @@ class DashboardController extends Controller
     {
     //   $admins=Favorite::all();
     $contacts=Contact::all();
+    $resturants=Resturant::all();
       $users_count=User::count();
       $orders_count=Order::count();
       $admins_count=Admin::count();
       $meals=Meal::all();
    
-      //   $categories=Category::all();
-    //   $subcategories=SubCategory::all();
-    //   $favorites=Favorite::withcount('user')->get();
-    //   $mealsname="[";
-    //   $userfavmeal_count="[";
-    //   foreach($favorites as $favorite) {
-    //     $userfavmeal_count.="'".$favorite->user_count."',";
-    //     $mealsname.="'".$favorite->meal->title."',";
-    //    }
-    //    $userfavmeal_count.="]";
-    //    $mealsname.="]";
-    //    dd($users);
-
-         
-    //   return response()->view('cms.index',['contacts'=>$contacts,'unReadNotificationsMessage'=>$unReadNotificationsMessage,'unReadNotificationsOrder'=>$unReadNotificationsOrder,'notificationsContact'=>$notificationsContact,'notificationsOrder'=>$notificationsOrder,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
-      return response()->view('cms.index',['contacts'=>$contacts,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
+ 
+      return response()->view('cms.index',['contacts'=>$contacts,'resturants'=>$resturants,'meals'=>$meals ,'users_count'=>$users_count,'orders_count'=>$orders_count,'admins_count'=>$admins_count]);
         
     }
    

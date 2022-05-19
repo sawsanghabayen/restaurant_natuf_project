@@ -21,7 +21,7 @@ class FavoriteController extends Controller
     {
         $favorites=$request->user()->meals;
         $resturants=Resturant::all();
-        $latestmeals=meal::orderBy('created_at','ASC')->take(6)->get();
+        $latestmeals=meal::orderBy('created_at','DESC')->take(6)->get();
         return response()->view('front.favorite',['favorites'=>$favorites,'resturants'=>$resturants,'latestmeals'=>$latestmeals]);
         
     }

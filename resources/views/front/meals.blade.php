@@ -120,7 +120,11 @@ small, .small {
             <h3>{{$meal->title}}</h3>
             <p>{{$meal->description}}</p>
             <span>{{$meal->price}}</span>
-            <a onclick="performCartStore({{$meal->id }} ,{{$meal->price}})" class="btn">add to cart</a>
+            @if(Auth::guard('user')->check())
+            <a  onclick="performCartStore({{$meal->id }} ,{{$meal->price}})" class="btn">add to cart</a>
+            @else
+            <a href="{{route('cms.login','user')}}"  class="btn"class="btn">add to cart</a>
+            @endif
         </div>
         
         @endforeach

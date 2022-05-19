@@ -19,4 +19,14 @@ public function meal()
         return $this->belongsTo(Meal::class, 'meal_id', 'id');
     }
     
+    public function getIsFullAttribute()
+    {
+        if (auth('user')->check()) {
+         
+            return $this->where('user_id', auth('user')->id())->exists();
+        }
+        return false;
+
+    }
+    
 }
